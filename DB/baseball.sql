@@ -1,0 +1,763 @@
+set client_encoding = 'UTF8';
+
+drop table pitching;
+drop table hitting;
+drop table player;
+drop table team;
+drop table coach;
+
+create table coach(name varchar(50), year numeric(4,0), birth numeric(8,0), salary numeric(10,0), primary key (name, year));
+create table team(team_name varchar(50), coach_name varchar(50), coach_year numeric(4,0), location varchar(30), stadium varchar(50),
+primary key (team_name, coach_name, coach_year), foreign key (coach_name, coach_year) references coach (name, year));
+create table player(name varchar(50), team varchar(50), number numeric(3,0), year numeric(4,0), position varchar(5), coach varchar(50),
+birth numeric(8,0), height numeric(4,1), weight numeric(4,1), salary numeric(10,0), primary key (name, team, number, year),
+foreign key (team, year, coach) references team (team_name, coach_year, coach_name));
+create table pitching(name varchar(50), team varchar(50), number numeric(3,0), year numeric(4,0), win numeric(2,0), lose numeric(2,0),
+SV numeric(3,0), ERA numeric(5,2), IP numeric(4,1), SO numeric(3,0), BB numeric(3,0), WAR numeric(4,2),
+primary key (name, team, number, year), foreign key (name, team, number, year) references player (name, team, number, year));
+create table hitting(name varchar(50), team varchar(50), number numeric(3,0), year numeric(4,0), AVG numeric(4,3), OPS numeric(4,3),
+hit numeric(3,0), HR numeric(2,0), RBI numeric(3,0), SB numeric(3,0), SO numeric(3,0), BB numeric(3,0), WAR numeric(4,2),
+primary key (name, team, number, year), foreign key (name, team, number, year) references player (name, team, number, year));
+
+insert into coach values ('한용덕', 2018, 19650630, 30000);
+insert into coach values ('김경문', 2018, 19581211, 50000);
+insert into coach values ('유영준', 2018, 19620920, null);
+insert into coach values ('류중일', 2018, 19630521, 50000);
+insert into coach values ('김기태', 2018, 19690707, 50000);
+insert into coach values ('김태형', 2018, 19670814, 50000);
+insert into coach values ('트레이 힐만', 2018, 19630104, 60000);
+insert into coach values ('조원우', 2018, 19710408, 30000);
+insert into coach values ('양상문', 2018, 19610508, null);
+insert into coach values ('김진욱', 2018, 19600925, 30000);
+insert into coach values ('김한수', 2018, 19711030, 20000);
+insert into coach values ('장정석', 2018, 19730514, 20000);
+insert into coach values ('염경엽', 2019, 19680329, 70000);
+insert into coach values ('류중일', 2019, 19630521, 50000);
+insert into coach values ('이강철', 2019, 19660712, 30000);
+insert into coach values ('장정석', 2019, 19730514, 20000);
+insert into coach values ('이동욱', 2019, 19740717, 20000);
+insert into coach values ('양상문', 2019, 19610508, 30000);
+insert into coach values ('김한수', 2019, 19711030, 20000);
+insert into coach values ('한용덕', 2019, 19650630, 30000);
+insert into coach values ('김태형', 2019, 19670814, 50000);
+insert into coach values ('김기태', 2019, 19690707, 50000);
+insert into coach values ('공필성', 2019, 19671111, null);
+insert into coach values ('허문회', 2019, 19720212, null);
+insert into coach values ('박흥식', 2019, 19620105, null);
+insert into coach values ('김태형', 2020, 19670814, 70000);
+insert into coach values ('염경엽', 2020, 19680329, 70000);
+insert into coach values ('류중일', 2020, 19630521, 50000);
+insert into coach values ('이강철', 2020, 19660712, 30000);
+insert into coach values ('한용덕', 2020, 19650630, 30000);
+insert into coach values ('허문회', 2020, 19720212, 25000);
+insert into coach values ('허삼영', 2020, 19720608, 20000);
+insert into coach values ('이동욱', 2020, 19740717, 20000);
+insert into coach values ('손혁', 2020, 19730801, 20000);
+insert into coach values ('김창현', 2020, 19850701, null);
+insert into coach values ('최원호', 2020, 19730313, null);
+insert into coach values ('맷 윌리엄스', 2020, 19651128, null);
+insert into coach values ('박경완', 2020, 19720711, null);
+
+insert into team values ('한화 이글스', '한용덕', 2018, '대전', '한화생명 이글스파크');
+insert into team values ('한화 이글스', '한용덕', 2019, '대전', '한화생명 이글스파크');
+insert into team values ('한화 이글스', '한용덕', 2020, '대전', '한화생명 이글스파크');
+insert into team values ('한화 이글스', '최원호', 2020, '대전', '한화생명 이글스파크');
+insert into team values ('두산 베어스', '김태형', 2018, '서울', '서울종합운동장 야구장');
+insert into team values ('두산 베어스', '김태형', 2019, '서울', '서울종합운동장 야구장');
+insert into team values ('두산 베어스', '김태형', 2020, '서울', '서울종합운동장 야구장');
+insert into team values ('롯데 자이언츠', '조원우', 2018, '부산', '사직 야구장');
+insert into team values ('롯데 자이언츠', '양상문', 2018, '부산', '사직 야구장');
+insert into team values ('롯데 자이언츠', '양상문', 2019, '부산', '사직 야구장');
+insert into team values ('롯데 자이언츠', '공필성', 2019, '부산', '사직 야구장');
+insert into team values ('롯데 자이언츠', '허문회', 2019, '부산', '사직 야구장');
+insert into team values ('롯데 자이언츠', '허문회', 2020, '부산', '사직 야구장');
+insert into team values ('삼성 라이온즈', '김한수', 2018, '대구', '삼성 라이온즈 파크');
+insert into team values ('삼성 라이온즈', '김한수', 2019, '대구', '삼성 라이온즈 파크');
+insert into team values ('삼성 라이온즈', '허삼영', 2020, '대구', '삼성 라이온즈 파크');
+insert into team values ('넥센 히어로즈', '장정석', 2018, '서울', '고척 스카이돔');
+insert into team values ('키움 히어로즈', '장정석', 2019, '서울', '고척 스카이돔');
+insert into team values ('키움 히어로즈', '손혁', 2020, '서울', '고척 스카이돔');
+insert into team values ('키움 히어로즈', '김창현', 2020, '서울', '고척 스카이돔');
+insert into team values ('KIA 타이거즈', '김기태', 2018, '광주', '기아 챔피언스 필드');
+insert into team values ('KIA 타이거즈', '김기태', 2019, '광주', '기아 챔피언스 필드');
+insert into team values ('KIA 타이거즈', '박흥식', 2019, '광주', '기아 챔피언스 필드');
+insert into team values ('KIA 타이거즈', '맷 윌리엄스', 2020, '광주', '기아 챔피언스 필드');
+insert into team values ('kt wiz', '김진욱', 2018, '수원', '케이티 위즈 파크');
+insert into team values ('kt wiz', '이강철', 2019, '수원', '케이티 위즈 파크');
+insert into team values ('kt wiz', '이강철', 2020, '수원', '케이티 위즈 파크');
+insert into team values ('LG 트윈스', '류중일', 2018, '서울', '서울종합운동장 야구장');
+insert into team values ('LG 트윈스', '류중일', 2019, '서울', '서울종합운동장 야구장');
+insert into team values ('LG 트윈스', '류중일', 2020, '서울', '서울종합운동장 야구장');
+insert into team values ('NC 다이노스', '김경문', 2018, '창원', '마산종합운동장 야구장');
+insert into team values ('NC 다이노스', '유영준', 2018, '창원', '마산종합운동장 야구장');
+insert into team values ('NC 다이노스', '이동욱', 2019, '창원', '창원 NC 파크');
+insert into team values ('NC 다이노스', '이동욱', 2020, '창원', '창원 NC 파크');
+insert into team values ('SK 와이번스', '트레이 힐만', 2018, '인천', '인천SK행복드림구장');
+insert into team values ('SK 와이번스', '염경엽', 2019, '인천', '인천SK행복드림구장');
+insert into team values ('SK 와이번스', '염경엽', 2020, '인천', '인천SK행복드림구장');
+insert into team values ('SK 와이번스', '박경완', 2020, '인천', '인천SK행복드림구장');
+
+insert into player values ('이태양', '한화 이글스', 22, 2018, 'P', '한용덕', 19900703, 192, 97, 7300);
+insert into player values ('안영명', '한화 이글스', 38, 2018, 'P', '한용덕', 19841119, 183, 90, 35000);
+insert into player values ('샘슨', '한화 이글스', 48, 2018, 'P', '한용덕', 19910106, 188, 102, 40000);
+insert into player values ('정우람', '한화 이글스', 57, 2018, 'P', '한용덕', 19850601, 181, 82, 120000);
+insert into player values ('최재훈', '한화 이글스', 13, 2018, 'C', '한용덕', 19890827, 178, 76, 8000);
+insert into player values ('정근우', '한화 이글스', 8, 2018, 'IF', '한용덕', 19821002, 172, 80, 70000);
+insert into player values ('하주석', '한화 이글스', 16, 2018, 'IF', '한용덕', 19940225, 184, 84, 12000);
+insert into player values ('김태균', '한화 이글스', 52, 2018, 'IF', '한용덕', 19820529, 185, 110, 160000);
+insert into player values ('이용규', '한화 이글스', 15, 2018, 'OF', '한용덕', 19850826, 175, 70, 40000);
+insert into player values ('호잉', '한화 이글스', 30, 2018, 'OF', '한용덕', 19890518, 190, 92, 40000);
+
+insert into player values ('김선빈', 'KIA 타이거즈', 3, 2018, 'IF', '김기태', 19891218, 165, 77, 28000);
+insert into player values ('김주찬', 'KIA 타이거즈', 16, 2018, 'IF', '김기태', 19810325, 183, 94, 40000);
+insert into player values ('나지완', 'KIA 타이거즈', 29, 2018, 'OF', '김기태', 19850519, 182, 105, 60000);
+insert into player values ('버나디나', 'KIA 타이거즈', 50, 2018, 'OF', '김기태', 19840612, 188, 95, 75000);
+insert into player values ('안치홍', 'KIA 타이거즈', 8, 2018, 'IF', '김기태', 19900702, 178, 90, 32000);
+insert into player values ('양현종', 'KIA 타이거즈', 54, 2018, 'P', '김기태', 19880301, 183, 91, 230000);
+insert into player values ('이범호', 'KIA 타이거즈', 25, 2018, 'IF', '김기태', 19811125, 183, 96, 65000);
+insert into player values ('임창용', 'KIA 타이거즈', 12, 2018, 'P', '김기태', 19760604, 182, 82, 50000);
+insert into player values ('최형우', 'KIA 타이거즈', 34, 2018, 'OF', '김기태', 19831216, 180, 106, 150000);
+insert into player values ('헥터', 'KIA 타이거즈', 43, 2018, 'P', '김기태', 19870126, 191, 93, 170000);
+
+insert into player values ('강백호', 'kt wiz', 50, 2018, 'OF', '김진욱', 19990729, 184, 98, 2700);
+insert into player values ('김사율', 'kt wiz', 55, 2018, 'P', '김진욱', 19800417, 181, 95, 15000);
+insert into player values ('김재윤', 'kt wiz', 62, 2018, 'P', '김진욱', 19900916, 185, 91, 11000);
+insert into player values ('로하스', 'kt wiz', 24, 2018, 'OF', '김진욱', 19900524, 189, 102, 80000);
+insert into player values ('박경수', 'kt wiz', 6, 2018, 'IF', '김진욱', 19840331, 178, 80, 23000);
+insert into player values ('심우준', 'kt wiz', 2, 2018, 'IF', '김진욱', 19950428, 183, 75, 6300);
+insert into player values ('유한준', 'kt wiz', 61, 2018, 'OF', '김진욱', 19810701, 186, 97, 60000);
+insert into player values ('이진영', 'kt wiz', 35, 2018, 'OF', '김진욱', 19800615, 185, 90, 40000);
+insert into player values ('피어밴드', 'kt wiz', 32, 2018, 'P', '김진욱', 19850822, 190, 102, 85000);
+insert into player values ('황재균', 'kt wiz', 10, 2018, 'IF', '김진욱', 19870728, 183, 96, 120000);
+
+insert into player values ('김재호', '두산 베어스', 52, 2018, 'IF', '김태형', 19850321, 181, 75, 65000);
+insert into player values ('김재환', '두산 베어스', 32, 2018, 'OF', '김태형', 19880922, 183, 90, 47000);
+insert into player values ('린드블럼', '두산 베어스', 34, 2018, 'P', '김태형', 19870615, 195, 105, 135000);
+insert into player values ('박건우', '두산 베어스', 37, 2018, 'OF', '김태형', 19900908, 184, 80, 37000);
+insert into player values ('양의지', '두산 베어스', 25, 2018, 'C', '김태형', 19870605, 179, 85, 60000);
+insert into player values ('오재원', '두산 베어스', 24, 2018, 'IF', '김태형', 19850209, 185, 75, 55000);
+insert into player values ('장원준', '두산 베어스', 28, 2018, 'P', '김태형', 19850731, 184, 85, 100000);
+insert into player values ('최주환', '두산 베어스', 53, 2018, 'IF', '김태형', 19880228, 178, 73, 20000);
+insert into player values ('파레디스', '두산 베어스', 44, 2018, 'OF', '김태형', 19881125, 191, 95, 70000);
+insert into player values ('허경민', '두산 베어스', 13, 2018, 'IF', '김태형', 19900826, 176, 69, 26500);
+
+insert into player values ('가르시아', 'LG 트윈스', 3, 2018, 'IF', '류중일', 19850412, 177, 93, 80000);
+insert into player values ('김용의', 'LG 트윈스', 10, 2018, 'OF', '류중일', 19850820, 187, 74, 9000);
+insert into player values ('김현수', 'LG 트윈스', 22, 2018, 'OF', '류중일', 19880112, 188, 100, 140000);
+insert into player values ('박용택', 'LG 트윈스', 33, 2018, 'OF', '류중일', 19790421, 185, 90, 80000);
+insert into player values ('신정락', 'LG 트윈스', 31, 2018, 'P', '류중일', 19870513, 177, 78, 10500);
+insert into player values ('양석환', 'LG 트윈스', 53, 2018, 'IF', '류중일', 19910715, 185, 90, 16000);
+insert into player values ('오지환', 'LG 트윈스', 2, 2018, 'IF', '류중일', 19900312, 186, 80, 29000);
+insert into player values ('유강남', 'LG 트윈스', 27, 2018, 'C', '류중일', 19920715, 182, 88, 18500);
+insert into player values ('윌슨', 'LG 트윈스', 35, 2018, 'P', '류중일', 19890925, 188, 84, 80000);
+insert into player values ('진해수', 'LG 트윈스', 21, 2018, 'P', '류중일', 19860626, 187, 85, 19000);
+
+insert into player values ('나성범', 'NC 다이노스', 47, 2018, 'OF', '김경문', 19891003, 183, 100, 43000);
+insert into player values ('모창민', 'NC 다이노스', 3, 2018, 'IF', '김경문', 19850508, 188, 89, 18500);
+insert into player values ('박민우', 'NC 다이노스', 1, 2018, 'IF', '김경문', 19930206, 185, 80, 32000);
+insert into player values ('박석민', 'NC 다이노스', 18, 2018, 'IF', '김경문', 19850622, 178, 88, 75000);
+insert into player values ('손시헌', 'NC 다이노스', 13, 2018, 'IF', '김경문', 19801019, 172, 73, 50000);
+insert into player values ('스크럭스', 'NC 다이노스', 35, 2018, 'IF', '김경문', 19870923, 183, 98, 70000);
+insert into player values ('왕웨이중', 'NC 다이노스', 48, 2018, 'P', '김경문', 19920425, 188, 83, 50000);
+insert into player values ('원종현', 'NC 다이노스', 46, 2018, 'P', '김경문', 19870731, 182, 83, 18500);
+insert into player values ('이민호', 'NC 다이노스', 29, 2018, 'P', '김경문', 19930811, 185, 90, 18800);
+insert into player values ('이종욱', 'NC 다이노스', 39, 2018, 'OF', '김경문', 19800618, 176, 78, 20000);
+
+insert into player values ('고종욱', '넥센 히어로즈', 53, 2018, 'OF', '장정석', 19890111, 184, 83, 11000);
+insert into player values ('김민성', '넥센 히어로즈', 3, 2018, 'IF', '장정석', 19881217, 181, 94, 35000);
+insert into player values ('김하성', '넥센 히어로즈', 7, 2018, 'IF', '장정석', 19951017, 175, 76, 32000);
+insert into player values ('로저스', '넥센 히어로즈', 45, 2018, 'P', '장정석', 19850814, 192, 95, 125000);
+insert into player values ('박동원', '넥센 히어로즈', 27, 2018, 'C', '장정석', 19900407, 179, 92, 18000);
+insert into player values ('박병호', '넥센 히어로즈', 52, 2018, 'IF', '장정석', 19860710, 185, 107, 150000);
+insert into player values ('서건창', '넥센 히어로즈', 14, 2018, 'IF', '장정석', 19890822, 176, 84, 38000);
+insert into player values ('이정후', '넥센 히어로즈', 51, 2018, 'OF', '장정석', 19980820, 185, 78, 11000);
+insert into player values ('조상우', '넥센 히어로즈', 11, 2018, 'P', '장정석', 19940904, 186, 97, 12000);
+insert into player values ('초이스', '넥센 히어로즈', 94, 2018, 'OF', '장정석', 19891110, 183, 98, 60000);
+
+insert into player values ('나종덕', '롯데 자이언츠', 39, 2018, 'C', '조원우', 19980316, 185, 99, 2800);
+insert into player values ('레일리', '롯데 자이언츠', 46, 2018, 'P', '조원우', 19880629, 190, 84, 111000);
+insert into player values ('문규현', '롯데 자이언츠', 6, 2018, 'IF', '조원우', 19830705, 185, 92, 18000);
+insert into player values ('민병헌', '롯데 자이언츠', 3, 2018, 'OF', '조원우', 19870310, 178, 87, 100000);
+insert into player values ('번즈', '롯데 자이언츠', 98, 2018, 'IF', '조원우', 19900807, 188, 93, 73000);
+insert into player values ('손승락', '롯데 자이언츠', 1, 2018, 'P', '조원우', 19820304, 187, 99, 70000);
+insert into player values ('손아섭', '롯데 자이언츠', 31, 2018, 'OF', '조원우', 19880318, 174, 84, 150000);
+insert into player values ('신본기', '롯데 자이언츠', 7, 2018, 'IF', '조원우', 19890321, 179, 88, 9000);
+insert into player values ('이대호', '롯데 자이언츠', 10, 2018, 'IF', '조원우', 19820621, 194, 130, 250000);
+insert into player values ('전준우', '롯데 자이언츠', 8, 2018, 'OF', '조원우', 19860225, 184, 97, 27000);
+
+insert into player values ('강민호', '삼성 라이온즈', 47, 2018, 'C', '김한수', 19850818, 185, 100, 100000);
+insert into player values ('구자욱', '삼성 라이온즈', 65, 2018, 'OF', '김한수', 19930212, 189, 75, 25000);
+insert into player values ('김상수', '삼성 라이온즈', 7, 2018, 'IF', '김한수', 19900323, 175, 68, 24000);
+insert into player values ('러프', '삼성 라이온즈', 50, 2018, 'IF', '김한수', 19860728, 190, 113, 140000);
+insert into player values ('박한이', '삼성 라이온즈', 33, 2018, 'OF', '김한수', 19790128, 182, 91, 25000);
+insert into player values ('박해민', '삼성 라이온즈', 58, 2018, 'OF', '김한수', 19900224, 180, 75, 29000);
+insert into player values ('배영섭', '삼성 라이온즈', 25, 2018, 'OF', '김한수', 19860627, 178, 78, 13000);
+insert into player values ('심창민', '삼성 라이온즈', 18, 2018, 'P', '김한수', 19930201, 185, 86, 23000);
+insert into player values ('아델만', '삼성 라이온즈', 35, 2018, 'P', '김한수', 19871113, 196, 102, 95000);
+insert into player values ('윤성환', '삼성 라이온즈', 1, 2018, 'P', '김한수', 19811008, 183, 88, 80000);
+
+insert into player values ('김강민', 'SK 와이번스', 0, 2018, 'OF', '트레이 힐만', 19820913, 182, 85, 60000);
+insert into player values ('김광현', 'SK 와이번스', 29, 2018, 'P', '트레이 힐만', 19880722, 188, 88, 140000);
+insert into player values ('나주환', 'SK 와이번스', 3, 2018, 'IF', '트레이 힐만', 19840614, 180, 84, 30000);
+insert into player values ('노수광', 'SK 와이번스', 17, 2018, 'OF', '트레이 힐만', 19900806, 180, 80, 13000);
+insert into player values ('로맥', 'SK 와이번스', 27, 2018, 'IF', '트레이 힐만', 19850930, 188, 100, 50000);
+insert into player values ('박희수', 'SK 와이번스', 47, 2018, 'P', '트레이 힐만', 19830713, 184, 88, 18500);
+insert into player values ('윤희상', 'SK 와이번스', 66, 2018, 'P', '트레이 힐만', 19850517, 193, 96, 13000);
+insert into player values ('이재원', 'SK 와이번스', 20, 2018, 'C', '트레이 힐만', 19880224, 185, 98, 35000);
+insert into player values ('최정', 'SK 와이번스', 14, 2018, 'IF', '트레이 힐만', 19870228, 180, 90, 120000);
+insert into player values ('켈리', 'SK 와이번스', 23, 2018, 'P', '트레이 힐만', 19881014, 188, 86, 140000);
+
+insert into player values ('이태양', '한화 이글스', 22, 2019, 'P', '한용덕', 19900703, 192, 97, 15000);
+insert into player values ('안영명', '한화 이글스', 38, 2019, 'P', '한용덕', 19841119, 183, 90, 35000);
+insert into player values ('서폴드', '한화 이글스', 44, 2019, 'P', '한용덕', 19900116, 188, 101, 70000);
+insert into player values ('정우람', '한화 이글스', 57, 2019, 'P', '한용덕', 19850601, 181, 82, 120000);
+insert into player values ('최재훈', '한화 이글스', 13, 2019, 'C', '한용덕', 19890827, 178, 76, 12500);
+insert into player values ('정근우', '한화 이글스', 8, 2019, 'IF', '한용덕', 19821002, 172, 80, 70000);
+insert into player values ('하주석', '한화 이글스', 16, 2019, 'IF', '한용덕', 19940225, 184, 84, 12000);
+insert into player values ('김태균', '한화 이글스', 52, 2019, 'IF', '한용덕', 19820529, 185, 110, 160000);
+insert into player values ('최진행', '한화 이글스', 25, 2019, 'OF', '한용덕', 19850817, 188, 100, 19000);
+insert into player values ('호잉', '한화 이글스', 30, 2019, 'OF', '한용덕', 19890518, 190, 92, 40000);
+
+insert into player values ('김선빈', 'KIA 타이거즈', 3, 2019, 'IF', '김기태', 19891218, 165, 77, 28000);
+insert into player values ('김주찬', 'KIA 타이거즈', 16, 2019, 'IF', '김기태', 19810325, 183, 94, 40000);
+insert into player values ('나지완', 'KIA 타이거즈', 29, 2019, 'OF', '김기태', 19850519, 182, 105, 60000);
+insert into player values ('터커', 'KIA 타이거즈', 52, 2019, 'OF', '김기태', 19900706, 183, 98, 18000);
+insert into player values ('안치홍', 'KIA 타이거즈', 8, 2019, 'IF', '김기태', 19900702, 178, 90, 32000);
+insert into player values ('양현종', 'KIA 타이거즈', 54, 2019, 'P', '김기태', 19880301, 183, 91, 230000);
+insert into player values ('박찬호', 'KIA 타이거즈', 25, 2019, 'IF', '김기태', 19950605, 178, 72, 3700);
+insert into player values ('임기준', 'KIA 타이거즈', 26, 2019, 'P', '김기태', 19911008, 182, 86, 6000);
+insert into player values ('최형우', 'KIA 타이거즈', 34, 2019, 'OF', '김기태', 19831216, 180, 106, 150000);
+insert into player values ('윌랜드', 'KIA 타이거즈', 56, 2019, 'P', '김기태', 19900121, 188, 92, 70000);
+
+insert into player values ('강백호', 'kt wiz', 50, 2019, 'OF', '이강철', 19990729, 184, 98, 2700);
+insert into player values ('전유수', 'kt wiz', 31, 2019, 'P', '이강철', 19861129, 185, 95, 8500);
+insert into player values ('김재윤', 'kt wiz', 62, 2019, 'P', '이강철', 19900916, 185, 91, 11000);
+insert into player values ('로하스', 'kt wiz', 24, 2019, 'OF', '이강철', 19900524, 189, 102, 80000);
+insert into player values ('박경수', 'kt wiz', 6, 2019, 'IF', '이강철', 19840331, 178, 80, 23000);
+insert into player values ('심우준', 'kt wiz', 2, 2019, 'IF', '이강철', 19950428, 183, 75, 6300);
+insert into player values ('유한준', 'kt wiz', 61, 2019, 'OF', '이강철', 19810701, 186, 97, 60000);
+insert into player values ('송민섭', 'kt wiz', 12, 2019, 'OF', '이강철', 19910802, 177, 80, 3000);
+insert into player values ('쿠에바스', 'kt wiz', 32, 2019, 'P', '이강철', 19901014, 188, 98, 60000);
+insert into player values ('황재균', 'kt wiz', 10, 2019, 'IF', '이강철', 19870728, 183, 96, 120000);
+
+insert into player values ('김재호', '두산 베어스', 52, 2019, 'IF', '김태형', 19850321, 181, 75, 65000);
+insert into player values ('김재환', '두산 베어스', 32, 2019, 'OF', '김태형', 19880922, 183, 90, 47000);
+insert into player values ('린드블럼', '두산 베어스', 34, 2019, 'P', '김태형', 19870615, 195, 105, 170000);
+insert into player values ('박건우', '두산 베어스', 37, 2019, 'OF', '김태형', 19900908, 184, 80, 37000);
+insert into player values ('박세혁', '두산 베어스', 10, 2019, 'C', '김태형', 19900109, 181, 86, 10000);
+insert into player values ('오재원', '두산 베어스', 24, 2019, 'IF', '김태형', 19850209, 185, 75, 55000);
+insert into player values ('장원준', '두산 베어스', 28, 2019, 'P', '김태형', 19850731, 184, 85, 100000);
+insert into player values ('최주환', '두산 베어스', 53, 2019, 'IF', '김태형', 19880228, 178, 73, 20000);
+insert into player values ('페르난데스', '두산 베어스', 9, 2019, 'IF', '김태형', 19880427, 178, 83, 40000);
+insert into player values ('허경민', '두산 베어스', 13, 2019, 'IF', '김태형', 19900826, 176, 69, 26500);
+
+insert into player values ('페게로', 'LG 트윈스', 65, 2019, 'IF', '류중일', 19870222, 195, 117, 18000);
+insert into player values ('김용의', 'LG 트윈스', 10, 2019, 'OF', '류중일', 19850820, 187, 74, 9000);
+insert into player values ('김현수', 'LG 트윈스', 22, 2019, 'OF', '류중일', 19880112, 188, 100, 140000);
+insert into player values ('박용택', 'LG 트윈스', 33, 2019, 'OF', '류중일', 19790421, 185, 90, 80000);
+insert into player values ('신정락', 'LG 트윈스', 31, 2019, 'P', '류중일', 19870513, 177, 78, 10500);
+insert into player values ('정주현', 'LG 트윈스', 7, 2019, 'IF', '류중일', 19901013, 176, 76, 5000);
+insert into player values ('오지환', 'LG 트윈스', 2, 2019, 'IF', '류중일', 19900312, 186, 80, 29000);
+insert into player values ('유강남', 'LG 트윈스', 27, 2019, 'C', '류중일', 19920715, 182, 88, 18500);
+insert into player values ('윌슨', 'LG 트윈스', 35, 2019, 'P', '류중일', 19890925, 188, 84, 80000);
+insert into player values ('진해수', 'LG 트윈스', 21, 2019, 'P', '류중일', 19860626, 187, 85, 19000);
+
+insert into player values ('나성범', 'NC 다이노스', 47, 2019, 'OF', '이동욱', 19891003, 183, 100, 43000);
+insert into player values ('모창민', 'NC 다이노스', 3, 2019, 'IF', '이동욱', 19850508, 188, 89, 18500);
+insert into player values ('박민우', 'NC 다이노스', 1, 2019, 'IF', '이동욱', 19930206, 185, 80, 32000);
+insert into player values ('박석민', 'NC 다이노스', 18, 2019, 'IF', '이동욱', 19850622, 178, 88, 75000);
+insert into player values ('손시헌', 'NC 다이노스', 13, 2019, 'IF', '이동욱', 19801019, 172, 73, 50000);
+insert into player values ('스몰린스키', 'NC 다이노스', 34, 2019, 'OF', '이동욱', 19890209, 180, 95, 30000);
+insert into player values ('루친스키', 'NC 다이노스', 40, 2019, 'P', '이동욱', 19881230, 188, 91, 60000);
+insert into player values ('원종현', 'NC 다이노스', 46, 2019, 'P', '이동욱', 19870731, 182, 83, 18500);
+insert into player values ('이민호', 'NC 다이노스', 29, 2019, 'P', '이동욱', 19930811, 185, 90, 18800);
+insert into player values ('이명기', 'NC 다이노스', 33, 2019, 'OF', '이동욱', 19871226, 183, 87, 25000);
+
+insert into player values ('김규민', '키움 히어로즈', 36, 2019, 'OF', '장정석', 19930126, 188, 85, 2900);
+insert into player values ('김혜성', '키움 히어로즈', 3, 2019, 'IF', '장정석', 19990127, 179, 78, 2900);
+insert into player values ('김하성', '키움 히어로즈', 7, 2019, 'IF', '장정석', 19951017, 175, 76, 32000);
+insert into player values ('브리검', '키움 히어로즈', 8, 2019, 'P', '장정석', 19880210, 190, 90, 65000);
+insert into player values ('박동원', '키움 히어로즈', 27, 2019, 'C', '장정석', 19900407, 179, 92, 18000);
+insert into player values ('박병호', '키움 히어로즈', 52, 2019, 'IF', '장정석', 19860710, 185, 107, 150000);
+insert into player values ('서건창', '키움 히어로즈', 14, 2019, 'IF', '장정석', 19890822, 176, 84, 38000);
+insert into player values ('이정후', '키움 히어로즈', 51, 2019, 'OF', '장정석', 19980820, 185, 78, 11000);
+insert into player values ('조상우', '키움 히어로즈', 11, 2019, 'P', '장정석', 19940904, 186, 97, 12000);
+insert into player values ('샌즈', '키움 히어로즈', 45, 2019, 'OF', '장정석', 19870928, 193, 105, 50000);
+
+insert into player values ('나종덕', '롯데 자이언츠', 39, 2019, 'C', '양상문', 19980316, 185, 99, 2800);
+insert into player values ('레일리', '롯데 자이언츠', 46, 2019, 'P', '양상문', 19880629, 190, 84, 111000);
+insert into player values ('문규현', '롯데 자이언츠', 6, 2019, 'IF', '양상문', 19830705, 185, 92, 18000);
+insert into player values ('민병헌', '롯데 자이언츠', 3, 2019, 'OF', '양상문', 19870310, 178, 87, 100000);
+insert into player values ('윌슨', '롯데 자이언츠', 69, 2019, 'IF', '양상문', 19900729, 180, 93, null);
+insert into player values ('손승락', '롯데 자이언츠', 1, 2019, 'P', '양상문', 19820304, 187, 99, 70000);
+insert into player values ('손아섭', '롯데 자이언츠', 31, 2019, 'OF', '양상문', 19880318, 174, 84, 150000);
+insert into player values ('신본기', '롯데 자이언츠', 7, 2019, 'IF', '양상문', 19890321, 179, 88, 9000);
+insert into player values ('이대호', '롯데 자이언츠', 10, 2019, 'IF', '양상문', 19820621, 194, 130, 250000);
+insert into player values ('전준우', '롯데 자이언츠', 8, 2019, 'OF', '양상문', 19860225, 184, 97, 27000);
+
+insert into player values ('강민호', '삼성 라이온즈', 47, 2019, 'C', '김한수', 19850818, 185, 100, 100000);
+insert into player values ('구자욱', '삼성 라이온즈', 65, 2019, 'OF', '김한수', 19930212, 189, 75, 25000);
+insert into player values ('김상수', '삼성 라이온즈', 7, 2019, 'IF', '김한수', 19900323, 175, 68, 24000);
+insert into player values ('러프', '삼성 라이온즈', 50, 2019, 'IF', '김한수', 19860728, 190, 113, 130000);
+insert into player values ('박한이', '삼성 라이온즈', 33, 2019, 'OF', '김한수', 19790128, 182, 91, 25000);
+insert into player values ('박해민', '삼성 라이온즈', 58, 2019, 'OF', '김한수', 19900224, 180, 75, 29000);
+insert into player values ('김동엽', '삼성 라이온즈', 38, 2019, 'OF', '김한수', 19900724, 186, 101, 11500);
+insert into player values ('장필준', '삼성 라이온즈', 26, 2019, 'P', '김한수', 19880408, 190, 90, 6500);
+insert into player values ('라이블리', '삼성 라이온즈', 39, 2019, 'P', '김한수', 19920305, 193, 86, 60000);
+insert into player values ('윤성환', '삼성 라이온즈', 1, 2019, 'P', '김한수', 19811008, 183, 88, 80000);
+
+insert into player values ('김강민', 'SK 와이번스', 0, 2019, 'OF', '염경엽', 19820913, 182, 85, 60000);
+insert into player values ('김광현', 'SK 와이번스', 29, 2019, 'P', '염경엽', 19880722, 188, 88, 140000);
+insert into player values ('나주환', 'SK 와이번스', 3, 2019, 'IF', '염경엽', 19840614, 180, 84, 30000);
+insert into player values ('노수광', 'SK 와이번스', 17, 2019, 'OF', '염경엽', 19900806, 180, 80, 13000);
+insert into player values ('로맥', 'SK 와이번스', 27, 2019, 'IF', '염경엽', 19850930, 188, 100, 50000);
+insert into player values ('박희수', 'SK 와이번스', 47, 2019, 'P', '염경엽', 19830713, 184, 88, 18500);
+insert into player values ('박종훈', 'SK 와이번스', 50, 2019, 'P', '염경엽', 19910813, 186, 90, 20000);
+insert into player values ('이재원', 'SK 와이번스', 20, 2019, 'C', '염경엽', 19880224, 185, 98, 35000);
+insert into player values ('최정', 'SK 와이번스', 14, 2019, 'IF', '염경엽', 19870228, 180, 90, 120000);
+insert into player values ('산체스', 'SK 와이번스', 23, 2019, 'P', '염경엽', 19891128, 185, 88, 85000);
+
+insert into player values ('이태양', '한화 이글스', 22, 2020, 'P', '한용덕', 19900703, 192, 97, 14000);
+insert into player values ('안영명', '한화 이글스', 38, 2020, 'P', '한용덕', 19841119, 183, 90, 35000);
+insert into player values ('서폴드', '한화 이글스', 44, 2020, 'P', '한용덕', 19900116, 188, 101, 90000);
+insert into player values ('정우람', '한화 이글스', 57, 2020, 'P', '한용덕', 19850601, 181, 82, 80000);
+insert into player values ('최재훈', '한화 이글스', 13, 2020, 'C', '한용덕', 19890827, 178, 76, 20000);
+insert into player values ('노시환', '한화 이글스', 8, 2020, 'IF', '한용덕', 20001203, 185, 96, 3300);
+insert into player values ('하주석', '한화 이글스', 16, 2020, 'IF', '한용덕', 19940225, 184, 84, 14000);
+insert into player values ('김태균', '한화 이글스', 52, 2020, 'IF', '한용덕', 19820529, 185, 110, 50000);
+insert into player values ('최진행', '한화 이글스', 25, 2020, 'OF', '한용덕', 19850817, 188, 100, 16000);
+insert into player values ('호잉', '한화 이글스', 30, 2020, 'OF', '한용덕', 19890518, 190, 92, 55000);
+
+insert into player values ('김선빈', 'KIA 타이거즈', 3, 2020, 'IF', '맷 윌리엄스', 19891218, 165, 77, 45000);
+insert into player values ('김주찬', 'KIA 타이거즈', 16, 2020, 'IF', '맷 윌리엄스', 19810325, 183, 94, 40000);
+insert into player values ('나지완', 'KIA 타이거즈', 29, 2020, 'OF', '맷 윌리엄스', 19850519, 182, 105, 60000);
+insert into player values ('터커', 'KIA 타이거즈', 52, 2020, 'OF', '맷 윌리엄스', 19900706, 183, 98, 55000);
+insert into player values ('최원준', 'KIA 타이거즈', 1, 2020, 'IF', '맷 윌리엄스', 19970323, 178, 85, 7000);
+insert into player values ('양현종', 'KIA 타이거즈', 54, 2020, 'P', '맷 윌리엄스', 19880301, 183, 91, 230000);
+insert into player values ('박찬호', 'KIA 타이거즈', 25, 2020, 'IF', '맷 윌리엄스', 19950605, 178, 72, 10500);
+insert into player values ('임기영', 'KIA 타이거즈', 17, 2020, 'P', '맷 윌리엄스', 19930416, 184, 86, 7000);
+insert into player values ('최형우', 'KIA 타이거즈', 34, 2020, 'OF', '맷 윌리엄스', 19831216, 180, 106, 150000);
+insert into player values ('브룩스', 'KIA 타이거즈', 36, 2020, 'P', '맷 윌리엄스', 19900427, 193, 104, 47900);
+
+insert into player values ('강백호', 'kt wiz', 50, 2020, 'OF', '이강철', 19990729, 184, 98, 21000);
+insert into player values ('전유수', 'kt wiz', 31, 2020, 'P', '이강철', 19861129, 185, 95, 10000);
+insert into player values ('김재윤', 'kt wiz', 62, 2020, 'P', '이강철', 19900916, 185, 91, 12000);
+insert into player values ('로하스', 'kt wiz', 24, 2020, 'OF', '이강철', 19900524, 189, 102, 80000);
+insert into player values ('박경수', 'kt wiz', 6, 2020, 'IF', '이강철', 19840331, 178, 80, 40000);
+insert into player values ('심우준', 'kt wiz', 2, 2020, 'IF', '이강철', 19950428, 183, 75, 13000);
+insert into player values ('유한준', 'kt wiz', 61, 2020, 'OF', '이강철', 19810701, 186, 97, 50000);
+insert into player values ('송민섭', 'kt wiz', 12, 2020, 'OF', '이강철', 19910802, 177, 80, 4700);
+insert into player values ('쿠에바스', 'kt wiz', 32, 2020, 'P', '이강철', 19901014, 188, 98, 60000);
+insert into player values ('황재균', 'kt wiz', 10, 2020, 'IF', '이강철', 19870728, 183, 96, 120000);
+
+insert into player values ('김재호', '두산 베어스', 52, 2020, 'IF', '김태형', 19850321, 181, 75, 65000);
+insert into player values ('김재환', '두산 베어스', 32, 2020, 'OF', '김태형', 19880922, 183, 90, 65000);
+insert into player values ('알칸타라', '두산 베어스', 43, 2020, 'P', '김태형', 19921204, 193, 100, 45000);
+insert into player values ('박건우', '두산 베어스', 37, 2020, 'OF', '김태형', 19900908, 184, 80, 45000);
+insert into player values ('박세혁', '두산 베어스', 10, 2020, 'C', '김태형', 19900109, 181, 86, 23200);
+insert into player values ('오재원', '두산 베어스', 24, 2020, 'IF', '김태형', 19850209, 185, 75, 30000);
+insert into player values ('장원준', '두산 베어스', 28, 2020, 'P', '김태형', 19850731, 184, 85, 30000);
+insert into player values ('최주환', '두산 베어스', 53, 2020, 'IF', '김태형', 19880228, 178, 73, 27000);
+insert into player values ('페르난데스', '두산 베어스', 9, 2020, 'IF', '김태형', 19880427, 178, 83, 40000);
+insert into player values ('허경민', '두산 베어스', 13, 2020, 'IF', '김태형', 19900826, 176, 69, 48000);
+
+insert into player values ('라모스', 'LG 트윈스', 44, 2020, 'IF', '류중일', 19941228, 193, 115, 30000);
+insert into player values ('김용의', 'LG 트윈스', 10, 2020, 'OF', '류중일', 19850820, 187, 74, 10500);
+insert into player values ('김현수', 'LG 트윈스', 22, 2020, 'OF', '류중일', 19880112, 188, 100, 130000);
+insert into player values ('박용택', 'LG 트윈스', 33, 2020, 'OF', '류중일', 19790421, 185, 90, 80000);
+insert into player values ('임찬규', 'LG 트윈스', 1, 2020, 'P', '류중일', 19921120, 185, 80, 13500);
+insert into player values ('정주현', 'LG 트윈스', 7, 2020, 'IF', '류중일', 19901013, 176, 76, 12500);
+insert into player values ('오지환', 'LG 트윈스', 2, 2020, 'IF', '류중일', 19900312, 186, 80, 60000);
+insert into player values ('유강남', 'LG 트윈스', 27, 2020, 'C', '류중일', 19920715, 182, 88, 23000);
+insert into player values ('윌슨', 'LG 트윈스', 35, 2020, 'P', '류중일', 19890925, 188, 84, 110000);
+insert into player values ('진해수', 'LG 트윈스', 21, 2020, 'P', '류중일', 19860626, 187, 85, 25000);
+
+insert into player values ('나성범', 'NC 다이노스', 47, 2020, 'OF', '이동욱', 19891003, 183, 100, 50000);
+insert into player values ('모창민', 'NC 다이노스', 3, 2020, 'IF', '이동욱', 19850508, 188, 89, 30000);
+insert into player values ('박민우', 'NC 다이노스', 1, 2020, 'IF', '이동욱', 19930206, 185, 80, 52000);
+insert into player values ('박석민', 'NC 다이노스', 18, 2020, 'IF', '이동욱', 19850622, 178, 88, 70000);
+insert into player values ('노진혁', 'NC 다이노스', 52, 2020, 'IF', '이동욱', 19890715, 184, 80, 14000);
+insert into player values ('알테어', 'NC 다이노스', 23, 2020, 'OF', '이동욱', 19910114, 196, 97, 80000);
+insert into player values ('루친스키', 'NC 다이노스', 40, 2020, 'P', '이동욱', 19881230, 188, 91, 100000);
+insert into player values ('원종현', 'NC 다이노스', 46, 2020, 'P', '이동욱', 19870731, 182, 83, 26000);
+insert into player values ('김진성', 'NC 다이노스', 55, 2020, 'P', '이동욱', 19850307, 186, 92, 16000);
+insert into player values ('이명기', 'NC 다이노스', 33, 2020, 'OF', '이동욱', 19871226, 183, 87, 24000);
+
+insert into player values ('김규민', '키움 히어로즈', 36, 2020, 'OF', '손혁', 19930126, 188, 85, 2900);
+insert into player values ('김혜성', '키움 히어로즈', 3, 2020, 'IF', '손혁', 19990127, 179, 78, 2900);
+insert into player values ('김하성', '키움 히어로즈', 7, 2020, 'IF', '손혁', 19951017, 175, 76, 32000);
+insert into player values ('브리검', '키움 히어로즈', 8, 2020, 'P', '손혁', 19880210, 190, 90, 65000);
+insert into player values ('박동원', '키움 히어로즈', 27, 2020, 'C', '손혁', 19900407, 179, 92, 18000);
+insert into player values ('박병호', '키움 히어로즈', 52, 2020, 'IF', '손혁', 19860710, 185, 107, 150000);
+insert into player values ('서건창', '키움 히어로즈', 14, 2020, 'IF', '손혁', 19890822, 176, 84, 38000);
+insert into player values ('이정후', '키움 히어로즈', 51, 2020, 'OF', '손혁', 19980820, 185, 78, 11000);
+insert into player values ('조상우', '키움 히어로즈', 11, 2020, 'P', '손혁', 19940904, 186, 97, 12000);
+insert into player values ('러셀', '키움 히어로즈', 50, 2020, 'OF', '손혁', 19940123, 183, 88, 53000);
+
+insert into player values ('김준태', '롯데 자이언츠', 44, 2020, 'C', '허문회', 19940731, 175, 91, 3800);
+insert into player values ('스트레일리', '롯데 자이언츠', 58, 2020, 'P', '허문회', 19881211, 189, 100, 50000);
+insert into player values ('안치홍', '롯데 자이언츠', 13, 2020, 'IF', '허문회', 19900702, 178, 97, 29000);
+insert into player values ('민병헌', '롯데 자이언츠', 3, 2020, 'OF', '허문회', 19870310, 178, 87, 125000);
+insert into player values ('마차도', '롯데 자이언츠', 6, 2020, 'IF', '허문회', 19920222, 185, 91, 30000);
+insert into player values ('김원중', '롯데 자이언츠', 34, 2020, 'P', '허문회', 19930614, 192, 91, 10000);
+insert into player values ('손아섭', '롯데 자이언츠', 31, 2020, 'OF', '허문회', 19880318, 174, 84, 200000);
+insert into player values ('신본기', '롯데 자이언츠', 7, 2020, 'IF', '허문회', 19890321, 179, 88, 12500);
+insert into player values ('이대호', '롯데 자이언츠', 10, 2020, 'IF', '허문회', 19820621, 194, 130, 250000);
+insert into player values ('전준우', '롯데 자이언츠', 8, 2020, 'OF', '허문회', 19860225, 184, 97, 50000);
+
+insert into player values ('강민호', '삼성 라이온즈', 47, 2020, 'C', '허삼영', 19850818, 185, 100, 125000);
+insert into player values ('구자욱', '삼성 라이온즈', 65, 2020, 'OF', '허삼영', 19930212, 189, 75, 28000);
+insert into player values ('김상수', '삼성 라이온즈', 7, 2020, 'IF', '허삼영', 19900323, 175, 68, 25000);
+insert into player values ('팔카', '삼성 라이온즈', 69, 2020, 'OF', '허삼영', 19911028, 188, 104, 10000);
+insert into player values ('이원석', '삼성 라이온즈', 16, 2020, 'IF', '허삼영', 19861021, 182, 82, 30000);
+insert into player values ('박해민', '삼성 라이온즈', 58, 2020, 'OF', '허삼영', 19900224, 180, 75, 30000);
+insert into player values ('김동엽', '삼성 라이온즈', 38, 2020, 'OF', '허삼영', 19900724, 186, 101, 13500);
+insert into player values ('장필준', '삼성 라이온즈', 26, 2020, 'P', '허삼영', 19880408, 190, 90, 21500);
+insert into player values ('라이블리', '삼성 라이온즈', 39, 2020, 'P', '허삼영', 19920305, 193, 86, 50000);
+insert into player values ('윤성환', '삼성 라이온즈', 1, 2020, 'P', '허삼영', 19811008, 183, 88, 40000);
+
+insert into player values ('김강민', 'SK 와이번스', 0, 2020, 'OF', '염경엽', 19820913, 182, 85, 35000);
+insert into player values ('문승원', 'SK 와이번스', 42, 2020, 'P', '염경엽', 19891128, 180, 88, 25700);
+insert into player values ('김성현', 'SK 와이번스', 16, 2020, 'IF', '염경엽', 19870309, 172, 72, 21000);
+insert into player values ('고종욱', 'SK 와이번스', 53, 2020, 'OF', '염경엽', 19890111, 184, 83, 17000);
+insert into player values ('로맥', 'SK 와이번스', 27, 2020, 'IF', '염경엽', 19850930, 188, 100, 90000);
+insert into player values ('박희수', 'SK 와이번스', 47, 2020, 'P', '염경엽', 19830713, 184, 88, 18500);
+insert into player values ('박종훈', 'SK 와이번스', 50, 2020, 'P', '염경엽', 19910813, 186, 90, 29000);
+insert into player values ('이재원', 'SK 와이번스', 20, 2020, 'C', '염경엽', 19880224, 185, 98, 130000);
+insert into player values ('최정', 'SK 와이번스', 14, 2020, 'IF', '염경엽', 19870228, 180, 90, 120000);
+insert into player values ('핀토', 'SK 와이번스', 35, 2020, 'P', '염경엽', 19940120, 183, 88, 45000);
+
+insert into pitching values ('이태양', '한화 이글스', 22, 2018, 4, 2, 0, 2.84, 79.1, 85, 23, 2.63);
+insert into pitching values ('안영명', '한화 이글스', 38, 2018, 8, 2, 0, 5.73, 66.0, 48, 15, 0.51);
+insert into pitching values ('샘슨', '한화 이글스', 48, 2018, 13, 8, 0, 4.68, 161.2, 195, 79, 2.99);
+insert into pitching values ('정우람', '한화 이글스', 57, 2018, 5, 3, 35, 3.40, 53.0, 56, 12, 2.02);
+insert into pitching values ('양현종', 'KIA 타이거즈', 54, 2018, 13, 11, 0, 4.15, 184.1, 152, 43, 5.23);
+insert into pitching values ('임창용', 'KIA 타이거즈', 12, 2018, 5, 5, 4, 5.42, 86.1, 84, 29, 1.57);
+insert into pitching values ('헥터', 'KIA 타이거즈', 43, 2018, 11, 10, 0, 4.60, 174.0, 137, 36, 2.98);
+insert into pitching values ('김사율', 'kt wiz', 55, 2018, 1, 2, 0, 5.76, 45.1, 35, 10, 0.34);
+insert into pitching values ('김재윤', 'kt wiz', 62, 2018, 7, 5, 15, 4.57, 61.0, 66, 15, 1.39);
+insert into pitching values ('피어밴드', 'kt wiz', 32, 2018, 8, 8, 0, 4.30, 163.1, 141, 38, 3.79);
+insert into pitching values ('린드블럼', '두산 베어스', 34, 2018, 15, 4, 0, 2.88, 168.2, 157, 38, 6.83);
+insert into pitching values ('장원준', '두산 베어스', 28, 2018, 3, 7, 0, 9.92, 71.2, 46, 33, -2.18);
+insert into pitching values ('신정락', 'LG 트윈스', 31, 2018, 3, 7, 0, 5.86, 50.2, 56, 17, 0.02);
+insert into pitching values ('윌슨', 'LG 트윈스', 35, 2018, 9, 4, 0, 3.07, 170.0, 149, 35, 6.33);
+insert into pitching values ('진해수', 'LG 트윈스', 21, 2018, 2, 3, 0, 7.21, 43.2, 37, 13, -0.49);
+insert into pitching values ('왕웨이중', 'NC 다이노스', 48, 2018, 7, 10, 0, 4.26, 141.2, 108, 40, 2.29);
+insert into pitching values ('원종현', 'NC 다이노스', 46, 2018, 3, 6, 2, 5.18, 64.1, 36, 22, 0.89);
+insert into pitching values ('이민호', 'NC 다이노스', 29, 2018, 5, 4, 14, 4.68, 50.0, 42, 19, 0.16);
+insert into pitching values ('로저스', '넥센 히어로즈', 45, 2018, 5, 4, 0, 3.80, 83.0, 65, 16, 1.97);
+insert into pitching values ('조상우', '넥센 히어로즈', 11, 2018, 1, 2, 9, 3.79, 19.0, 23, 6, 0.28);
+insert into pitching values ('레일리', '롯데 자이언츠', 46, 2018, 11, 13, 0, 4.74, 178.1, 178, 54, 2.97);
+insert into pitching values ('손승락', '롯데 자이언츠', 1, 2018, 3, 5, 28, 3.90, 57.2, 60, 20, 2.25);
+insert into pitching values ('심창민', '삼성 라이온즈', 18, 2018, 5, 2, 17, 4.07, 66.1, 68, 22, 1.87);
+insert into pitching values ('아델만', '삼성 라이온즈', 35, 2018, 8, 12, 0, 5.05, 171.0, 137, 54, 2.83);
+insert into pitching values ('윤성환', '삼성 라이온즈', 1, 2018, 5, 9, 0, 6.98, 117.1, 89, 32, -0.51);
+insert into pitching values ('김광현', 'SK 와이번스', 29, 2018, 11, 8, 0, 2.98, 136.0, 130, 30, 5.26);
+insert into pitching values ('박희수', 'SK 와이번스', 47, 2018, 1, 2, 0, 3.27, 33.0, 30, 15, 0.84);
+insert into pitching values ('윤희상', 'SK 와이번스', 66, 2018, 1, 2, 1, 5.12, 51.0, 44, 7, 0.72);
+insert into pitching values ('켈리', 'SK 와이번스', 23, 2018, 12, 7, 0, 4.09, 158.1, 161, 47, 3.90);
+
+insert into pitching values ('이태양', '한화 이글스', 22, 2019, 1, 6, 0, 5.81, 66.2, 64, 13, -0.39);
+insert into pitching values ('안영명', '한화 이글스', 38, 2019, 4, 7, 0, 3.92, 62.0, 48, 13, 1.20);
+insert into pitching values ('서폴드', '한화 이글스', 44, 2019, 12, 11, 0, 3.51, 192.1, 135, 54, 4.22);
+insert into pitching values ('정우람', '한화 이글스', 57, 2019, 4, 3, 26, 1.54, 58.1, 48, 16, 3.82);
+insert into pitching values ('양현종', 'KIA 타이거즈', 54, 2019, 16, 8, 0, 2.29, 184.2, 163, 33, 7.35);
+insert into pitching values ('임기준', 'KIA 타이거즈', 26, 2019, 2, 2, 0, 3.44, 36.2, 24, 16, 0.65);
+insert into pitching values ('윌랜드', 'KIA 타이거즈', 56, 2019, 8, 10, 0, 4.75, 165.0, 137, 59, 1.61);
+insert into pitching values ('전유수', 'kt wiz', 31, 2019, 3, 1, 1, 3.39, 66.1, 46, 18, 0.88);
+insert into pitching values ('김재윤', 'kt wiz', 62, 2019, 2, 2, 7, 2.27, 47.2, 42, 12, 1.68);
+insert into pitching values ('쿠에바스', 'kt wiz', 32, 2019, 13, 10, 0, 3.62, 184.0, 135, 63, 3.44);
+insert into pitching values ('린드블럼', '두산 베어스', 34, 2019, 20, 3, 0, 2.50, 194.2, 189, 29, 6.86);
+insert into pitching values ('장원준', '두산 베어스', 28, 2019, 0, 0, 0, 9.00, 2.0, 1, 3, -0.08);
+insert into pitching values ('신정락', 'LG 트윈스', 31, 2019, 5, 1, 0, 5.84, 44.2, 35, 21, -0.57);
+insert into pitching values ('윌슨', 'LG 트윈스', 35, 2019, 14, 7, 0, 2.92, 185.0, 137, 43, 3.40);
+insert into pitching values ('진해수', 'LG 트윈스', 21, 2019, 3, 1, 0, 3.35, 43.0, 38, 16, 0.83);
+insert into pitching values ('루친스키', 'NC 다이노스', 40, 2019, 9, 9, 0, 3.05, 177.1, 119, 45, 4.64);
+insert into pitching values ('원종현', 'NC 다이노스', 46, 2019, 3, 3, 31, 4.05, 60.0, 59, 17, 0.41);
+insert into pitching values ('이민호', 'NC 다이노스', 29, 2019, 0, 0, 0, 6.52, 9.2, 4, 9, -0.04);
+insert into pitching values ('브리검', '키움 히어로즈', 8, 2019, 13, 5, 0, 2.96, 158.1, 130, 46, 3.69);
+insert into pitching values ('조상우', '키움 히어로즈', 11, 2019, 2, 4, 20, 2.66, 47.1, 46, 8, 1.75);
+insert into pitching values ('레일리', '롯데 자이언츠', 46, 2019, 5, 14, 0, 3.88, 181.0, 140, 65, 4.08);
+insert into pitching values ('손승락', '롯데 자이언츠', 1, 2019, 4, 3, 9, 3.93, 52.2, 44, 19, 0.85);
+insert into pitching values ('장필준', '삼성 라이온즈', 26, 2019, 3, 3, 11, 3.62, 69.2, 53, 33, 1.74);
+insert into pitching values ('라이블리', '삼성 라이온즈', 39, 2019, 4, 4, 0, 3.95, 57.0, 58, 13, 1.10);
+insert into pitching values ('윤성환', '삼성 라이온즈', 1, 2019, 8, 13, 0, 4.77, 145.1, 65, 50, 0.82);
+insert into pitching values ('김광현', 'SK 와이번스', 29, 2019, 17, 6, 0, 2.51, 190.1, 180, 38, 6.39);
+insert into pitching values ('박희수', 'SK 와이번스', 47, 2019, 0, 1, 1, 1.26, 28.2, 14, 13, 0.91);
+insert into pitching values ('박종훈', 'SK 와이번스', 50, 2019, 8, 11, 0, 3.88, 144.0, 100, 59, 2.10);
+insert into pitching values ('산체스', 'SK 와이번스', 23, 2019, 17, 5, 0, 2.62, 165.0, 148, 42, 5.93);
+
+insert into pitching values ('이태양', '한화 이글스', 22, 2020, 2, 1, 0, 5.27, 54.2, 45, 16, 0.64);
+insert into pitching values ('안영명', '한화 이글스', 38, 2020, 1, 1, 0, 6.04, 44.2, 33, 18, 0.23);
+insert into pitching values ('서폴드', '한화 이글스', 44, 2020, 10, 13, 0, 4.91, 165.0, 97, 42, 1.31);
+insert into pitching values ('정우람', '한화 이글스', 57, 2020, 3, 5, 16, 4.80, 54.1, 53, 12, 1.22);
+insert into pitching values ('양현종', 'KIA 타이거즈', 54, 2020, 11, 10, 0, 4.70, 172.1, 149, 64, 2.53);
+insert into pitching values ('임기영', 'KIA 타이거즈', 17, 2020, 9, 10, 0, 5.15, 127.2, 106, 33, 1.36);
+insert into pitching values ('브룩스', 'KIA 타이거즈', 36, 2020, 11, 4, 0, 2.50, 151.1, 130, 24, 7.17);
+insert into pitching values ('전유수', 'kt wiz', 31, 2020, 5, 4, 2, 5.12, 45.2, 27, 21, 0.53);
+insert into pitching values ('김재윤', 'kt wiz', 62, 2020, 5, 3, 21, 3.26, 60.2, 58, 15, 2.19);
+insert into pitching values ('쿠에바스', 'kt wiz', 32, 2020, 10, 8, 0, 4.10, 158.0, 110, 46, 2.59);
+insert into pitching values ('알칸타라', '두산 베어스', 43, 2020, 20, 2, 0, 2.54, 198.2, 182, 30, 8.31);
+insert into pitching values ('장원준', '두산 베어스', 28, 2020, 0, 1, 0, 12.71, 5.2, 2, 6, -0.39);
+insert into pitching values ('임찬규', 'LG 트윈스', 1, 2020, 10, 9, 0, 4.08, 147.2, 138, 65, 1.49);
+insert into pitching values ('윌슨', 'LG 트윈스', 35, 2020, 10, 7, 0, 4.32, 139.2, 107, 36, 1.15);
+insert into pitching values ('진해수', 'LG 트윈스', 21, 2020, 4, 2, 0, 4.38, 49.1, 58, 23, 0.50);
+insert into pitching values ('루친스키', 'NC 다이노스', 40, 2020, 19, 5, 0, 3.05, 183.0, 167, 57, 5.52);
+insert into pitching values ('원종현', 'NC 다이노스', 46, 2020, 3, 5, 29, 4.34, 56.0, 40, 20, 0.94);
+insert into pitching values ('김진성', 'NC 다이노스', 55, 2020, 3, 0, 0, 2.66, 47.1, 56, 10, 1.44);
+insert into pitching values ('브리검', '키움 히어로즈', 8, 2020, 9, 5, 0, 3.62, 107.0, 105, 42, 2.34);
+insert into pitching values ('조상우', '키움 히어로즈', 11, 2020, 5, 3, 31, 2.24, 52.1, 61, 18, 2.75);
+insert into pitching values ('스트레일리', '롯데 자이언츠', 58, 2020, 15, 4, 0, 2.50, 194.2, 205, 51, 7.49);
+insert into pitching values ('김원중', '롯데 자이언츠', 34, 2020, 5, 4, 25, 3.94, 59.1, 57, 23, 1.58);
+insert into pitching values ('장필준', '삼성 라이온즈', 26, 2020, 0, 3, 0, 5.75, 36.0, 26, 16, 0.30);
+insert into pitching values ('라이블리', '삼성 라이온즈', 39, 2020, 6, 7, 0, 4.26, 112.0, 95, 39, 2.69);
+insert into pitching values ('윤성환', '삼성 라이온즈', 1, 2020, 0, 2, 0, 5.79, 18.2, 4, 11, -0.16);
+insert into pitching values ('문승원', 'SK 와이번스', 42, 2020, 5, 8, 0, 3.83, 138.2, 110, 43, 3.33);
+insert into pitching values ('박희수', 'SK 와이번스', 47, 2020, 0, 1, 0, 5.47, 24.2, 26, 10, 0.24);
+insert into pitching values ('박종훈', 'SK 와이번스', 50, 2020, 13, 10, 0, 4.37, 154.1, 134, 75, 2.54);
+insert into pitching values ('핀토', 'SK 와이번스', 35, 2020, 6, 15, 0, 6.17, 162.0, 112, 90, -0.25);
+
+insert into hitting values ('최재훈', '한화 이글스', 13, 2018, 0.262, 0.666, 78, 1, 27, 8, 61, 20, 0.77);
+insert into hitting values ('정근우', '한화 이글스', 8, 2018, 0.304, 0.839, 114, 11, 57, 6, 43, 39, 1.64);
+insert into hitting values ('하주석', '한화 이글스', 16, 2018, 0.254, 0.664, 123, 9, 52, 14, 130, 28, 0.26);
+insert into hitting values ('김태균', '한화 이글스', 52, 2018, 0.315, 0.834, 80, 10, 34, 0, 56, 13, 0.47);
+insert into hitting values ('이용규', '한화 이글스', 15, 2018, 0.293, 0.711, 144, 1, 36, 30, 62, 59, 1.84);
+insert into hitting values ('호잉', '한화 이글스', 30, 2018, 0.306, 0.942, 162, 30, 110, 23, 93, 51, 3.72);
+
+insert into hitting values ('김선빈', 'KIA 타이거즈', 3, 2018, 0.295, 0.747, 125, 4, 158, 4, 42, 48, 2.10);
+insert into hitting values ('김주찬', 'KIA 타이거즈', 16, 2018, 0.340, 0.895, 146, 18, 93, 8, 57, 23, 2.75);
+insert into hitting values ('나지완', 'KIA 타이거즈', 29, 2018, 0.271, 0.951, 86, 26, 78, 0, 81, 38, 2.35);
+insert into hitting values ('버나디나', 'KIA 타이거즈', 50, 2018, 0.310, 0.883, 159, 20, 70, 32, 103, 63, 4.55);
+insert into hitting values ('안치홍', 'KIA 타이거즈', 8, 2018, 0.342, 0.954, 169, 23, 118, 5, 57, 36, 4.98);
+insert into hitting values ('이범호', 'KIA 타이거즈', 25, 2018, 0.280, 0.848, 93, 20, 69, 1, 59, 42, 2.23);
+insert into hitting values ('최형우', 'KIA 타이거즈', 34, 2018, 0.339, 0.963, 179, 25, 103, 3, 87, 66, 4.94);
+
+insert into hitting values ('강백호', 'kt wiz', 50, 2018, 0.290, 0.879, 153, 29, 84, 3, 124, 52, 2.10);
+insert into hitting values ('로하스', 'kt wiz', 24, 2018, 0.305, 0.979, 172, 43, 114, 18, 142, 71, 5.66);
+insert into hitting values ('박경수', 'kt wiz', 6, 2018, 0.262, 0.826, 120, 25, 74, 4, 129, 58, 2.51);
+insert into hitting values ('심우준', 'kt wiz', 2, 2018, 0.259, 0.674, 95, 4, 29, 11, 58, 20, -0.09);
+insert into hitting values ('유한준', 'kt wiz', 61, 2018, 0.339, 0.939, 145, 20, 83, 1, 53, 47, 3.48);
+insert into hitting values ('이진영', 'kt wiz', 35, 2018, 0.318, 0.787, 90, 3, 39, 2, 35, 25, 0.48);
+insert into hitting values ('황재균', 'kt wiz', 10, 2018, 0.296, 0.885, 157, 25, 88, 14, 120, 49, 3.40);
+
+insert into hitting values ('김재호', '두산 베어스', 52, 2018, 0.311, 0.870, 125, 16, 75, 6, 77, 52, 3.79);
+insert into hitting values ('김재환', '두산 베어스', 32, 2018, 0.334, 1.062, 176, 44, 133, 2, 134, 59, 6.94);
+insert into hitting values ('박건우', '두산 베어스', 37, 2018, 0.326, 0.847, 159, 12, 84, 7, 65, 28, 3.42);
+insert into hitting values ('양의지', '두산 베어스', 25, 2018, 0.358, 1.013, 157, 23, 77, 6, 40, 45, 6.42);
+insert into hitting values ('오재원', '두산 베어스', 24, 2018, 0.313, 0.832, 148, 15, 81, 15, 119, 41, 3.29);
+insert into hitting values ('최주환', '두산 베어스', 53, 2018, 0.333, 0.979, 173, 26, 108, 1, 89, 51, 4.66);
+insert into hitting values ('파레디스', '두산 베어스', 44, 2018, 0.138, 0.443, 9, 1, 4, 1, 17, 4, -0.73);
+insert into hitting values ('허경민', '두산 베어스', 13, 2018, 0.324, 0.835, 167, 10, 79, 20, 52, 32, 3.56);
+
+insert into hitting values ('가르시아', 'LG 트윈스', 3, 2018, 0.339, 0.903, 62, 8, 34, 5, 25, 9, 1.53);
+insert into hitting values ('김용의', 'LG 트윈스', 10, 2018, 0.233, 0.543, 37, 0, 13, 10, 32, 16, -0.85);
+insert into hitting values ('김현수', 'LG 트윈스', 22, 2018, 0.362, 1.004, 164, 20, 101, 1, 61, 47, 4.79);
+insert into hitting values ('박용택', 'LG 트윈스', 33, 2018, 0.303, 0.828, 159, 15, 76, 3, 107, 47, 1.38);
+insert into hitting values ('양석환', 'LG 트윈스', 53, 2018, 0.263, 0.759, 127, 22, 82, 2, 81, 24, 1.37);
+insert into hitting values ('오지환', 'LG 트윈스', 2, 2018, 0.278, 0.750, 148, 11, 71, 10, 146, 59, 2.83);
+insert into hitting values ('유강남', 'LG 트윈스', 27, 2018, 0.296, 0.860, 126, 19, 66, 0, 80, 28, 3.68);
+
+insert into hitting values ('나성범', 'NC 다이노스', 47, 2018, 0.318, 0.899, 177, 23, 91, 15, 131, 44, 4.51);
+insert into hitting values ('모창민', 'NC 다이노스', 3, 2018, 0.279, 0.826, 80, 17, 62, 2, 51, 21, 0.95);
+insert into hitting values ('박민우', 'NC 다이노스', 1, 2018, 0.324, 0.821, 133, 5, 33, 17, 51, 32, 2.93);
+insert into hitting values ('박석민', 'NC 다이노스', 18, 2018, 0.255, 0.816, 81, 16, 55, 1, 80, 39, 0.91);
+insert into hitting values ('손시헌', 'NC 다이노스', 13, 2018, 0.188, 0.561, 24, 2, 14, 2, 20, 15, -0.16);
+insert into hitting values ('스크럭스', 'NC 다이노스', 35, 2018, 0.257, 0.826, 129, 26, 97, 3, 144, 55, 1.41);
+insert into hitting values ('이종욱', 'NC 다이노스', 39, 2018, 0.230, 0.563, 28, 1, 8, 1, 16, 4, -0.71);
+
+insert into hitting values ('고종욱', '넥센 히어로즈', 53, 2018, 0.279, 0.709, 92, 6, 54, 17, 96, 15, -0.30);
+insert into hitting values ('김민성', '넥센 히어로즈', 3, 2018, 0.283, 0.765, 117, 10, 45, 1, 80, 40, 1.75);
+insert into hitting values ('김하성', '넥센 히어로즈', 7, 2018, 0.288, 0.832, 147, 20, 84, 8, 81, 54, 3.56);
+insert into hitting values ('박동원', '넥센 히어로즈', 27, 2018, 0.248, 0.729, 29, 6, 17, 0, 25, 9, 0.39);
+insert into hitting values ('박병호', '넥센 히어로즈', 52, 2018, 0.345, 1.175, 138, 43, 112, 0, 114, 68, 6.62);
+insert into hitting values ('서건창', '넥센 히어로즈', 14, 2018, 0.340, 0.824, 48, 0, 15, 2, 19, 12, 0.66);
+insert into hitting values ('이정후', '넥센 히어로즈', 51, 2018, 0.355, 0.889, 163, 6, 57, 11, 58, 42, 3.75);
+insert into hitting values ('초이스', '넥센 히어로즈', 94, 2018, 0.258, 0.794, 90, 17, 61, 2, 79, 33, 1.19);
+
+insert into hitting values ('나종덕', '롯데 자이언츠', 39, 2018, 0.124, 0.376, 22, 2, 11, 0, 85, 12, -1.71);
+insert into hitting values ('문규현', '롯데 자이언츠', 6, 2018, 0.275, 0.708, 87, 6, 41, 3, 45, 18, 0.48);
+insert into hitting values ('민병헌', '롯데 자이언츠', 3, 2018, 0.318, 0.855, 141, 17, 66, 8, 68, 35, 3.05);
+insert into hitting values ('번즈', '롯데 자이언츠', 98, 2018, 0.268, 0.842, 124, 23, 64, 5, 133, 33, 2.67);
+insert into hitting values ('손아섭', '롯데 자이언츠', 31, 2018, 0.329, 0.950, 182, 26, 93, 20, 99, 68, 5.30);
+insert into hitting values ('신본기', '롯데 자이언츠', 7, 2018, 0.294, 0.799, 125, 11, 71, 1, 95, 33, 1.87);
+insert into hitting values ('이대호', '롯데 자이언츠', 10, 2018, 0.333, 0.987, 181, 37, 125, 0, 75, 43, 3.84);
+insert into hitting values ('전준우', '롯데 자이언츠', 8, 2018, 0.342, 0.991, 190, 33, 90, 7, 82, 48, 5.67);
+
+insert into hitting values ('강민호', '삼성 라이온즈', 47, 2018, 0.269, 0.788, 115, 22, 71, 0, 96, 29, 1.97);
+insert into hitting values ('구자욱', '삼성 라이온즈', 65, 2018, 0.333, 0.926, 159, 20, 84, 10, 110, 43, 3.91);
+insert into hitting values ('김상수', '삼성 라이온즈', 7, 2018, 0.263, 0.676, 119, 10, 50, 12, 91, 27, -1.49);
+insert into hitting values ('러프', '삼성 라이온즈', 50, 2018, 0.330, 1.024, 167, 33, 125, 5, 107, 65, 5.28);
+insert into hitting values ('박한이', '삼성 라이온즈', 33, 2018, 0.284, 0.781, 97, 10, 43, 5, 91, 43, 0.59);
+insert into hitting values ('박해민', '삼성 라이온즈', 58, 2018, 0.299, 0.793, 172, 9, 68, 36, 99, 56, 3.20);
+insert into hitting values ('배영섭', '삼성 라이온즈', 25, 2018, 0.245, 0.617, 36, 0, 13, 1, 35, 16, -0.28);
+
+insert into hitting values ('김강민', 'SK 와이번스', 0, 2018, 0.298, 0.906, 70, 14, 46, 10, 57, 22, 1.71);
+insert into hitting values ('나주환', 'SK 와이번스', 3, 2018, 0.262, 0.767, 95, 12, 56, 5, 66, 38, 0.98);
+insert into hitting values ('노수광', 'SK 와이번스', 17, 2018, 0.313, 0.815, 161, 8, 53, 25, 86, 48, 3.03);
+insert into hitting values ('로맥', 'SK 와이번스', 27, 2018, 0.316, 1.001, 167, 43, 107, 10, 123, 72, 4.78);
+insert into hitting values ('이재원', 'SK 와이번스', 20, 2018, 0.329, 0.918, 134, 17, 57, 0, 65, 43, 4.21);
+insert into hitting values ('최정', 'SK 와이번스', 14, 2018, 0.244, 0.915, 99, 35, 74, 9, 129, 58, 3.52);
+
+insert into hitting values ('최재훈', '한화 이글스', 13, 2019, 0.290, 0.760, 108, 3, 31, 3, 61, 56, 3.56);
+insert into hitting values ('정근우', '한화 이글스', 8, 2019, 0.278, 0.688, 77, 3, 30, 8, 43, 20, 0.76);
+insert into hitting values ('하주석', '한화 이글스', 16, 2019, 0.263, 0.632, 5, 0, 2, 0, 4, 0, 0.04);
+insert into hitting values ('김태균', '한화 이글스', 52, 2019, 0.305, 0.777, 132, 6, 62, 3, 94, 54, 1.90);
+insert into hitting values ('최진행', '한화 이글스', 25, 2019, 0.231, 0.731, 27, 6, 19, 0, 28, 9, 0.34);
+insert into hitting values ('호잉', '한화 이글스', 30, 2019, 0.284, 0.800, 135, 18, 73, 22, 90, 38, 3.50);
+
+insert into hitting values ('김선빈', 'KIA 타이거즈', 3, 2019, 0.292, 0.730, 115, 3, 40, 5, 26, 43, 2.27);
+insert into hitting values ('김주찬', 'KIA 타이거즈', 16, 2019, 0.300, 0.714, 101, 3, 32, 3, 44, 17, 0.69);
+insert into hitting values ('나지완', 'KIA 타이거즈', 29, 2019, 0.186, 0.665, 24, 6, 17, 0, 37, 19, 0.05);
+insert into hitting values ('터커', 'KIA 타이거즈', 52, 2019, 0.311, 0.860, 111, 9, 50, 0, 44, 38, 3.21);
+insert into hitting values ('안치홍', 'KIA 타이거즈', 8, 2019, 0.315, 0.792, 114, 5, 49, 4, 37, 40, 2.81);
+insert into hitting values ('박찬호', 'KIA 타이거즈', 25, 2019, 0.260, 0.618, 131, 2, 49, 39, 83, 26, 0.88);
+insert into hitting values ('최형우', 'KIA 타이거즈', 34, 2019, 0.300, 0.897, 137, 17, 86, 0, 77, 85, 4.10);
+
+insert into hitting values ('강백호', 'kt wiz', 50, 2019, 0.336, 0.911, 147, 13, 65, 9, 87, 61, 4.69);
+insert into hitting values ('로하스', 'kt wiz', 24, 2019, 0.321, 0.907, 167, 24, 104, 4, 120, 49, 5.47);
+insert into hitting values ('박경수', 'kt wiz', 6, 2019, 0.247, 0.711, 104, 10, 65, 0, 102, 55, 2.16);
+insert into hitting values ('심우준', 'kt wiz', 2, 2019, 0.279, 0.668, 109, 3, 28, 24, 68, 23, 1.92);
+insert into hitting values ('유한준', 'kt wiz', 61, 2019, 0.317, 0.826, 159, 14, 86, 3, 61, 52, 3.44);
+insert into hitting values ('송민섭', 'kt wiz', 12, 2019, 0.302, 0.736, 16, 0, 4, 1, 13, 7, 0.23);
+insert into hitting values ('황재균', 'kt wiz', 10, 2019, 0.283, 0.824, 127, 20, 67, 10, 71, 52, 3.98);
+
+insert into hitting values ('김재호', '두산 베어스', 52, 2019, 0.268, 0.737, 101, 4, 48, 3, 58, 67, 2.92);
+insert into hitting values ('김재환', '두산 베어스', 32, 2019, 0.283, 0.798, 140, 15, 91, 3, 113, 63, 3.56);
+insert into hitting values ('박건우', '두산 베어스', 37, 2019, 0.319, 0.863, 146, 10, 64, 12, 57, 60, 4.71);
+insert into hitting values ('박세혁', '두산 베어스', 10, 2019, 0.279, 0.736, 123, 4, 63, 8, 68, 41, 3.09);
+insert into hitting values ('오재원', '두산 베어스', 24, 2019, 0.164, 0.539, 29, 3, 18, 6, 50, 25, -0.29);
+insert into hitting values ('최주환', '두산 베어스', 53, 2019, 0.277, 0.697, 79, 4, 47, 0, 35, 28, 0.77);
+insert into hitting values ('페르난데스', '두산 베어스', 9, 2019, 0.344, 0.892, 197, 15, 88, 1, 54, 61, 5.15);
+insert into hitting values ('허경민', '두산 베어스', 13, 2019, 0.288, 0.721, 137, 4, 60, 11, 36, 34, 2.47);
+
+insert into hitting values ('페게로', 'LG 트윈스', 65, 2019, 0.286, 0.804, 57, 9, 44, 2, 63, 12, 1.24);
+insert into hitting values ('김용의', 'LG 트윈스', 10, 2019, 0.218, 0.595, 39, 0, 17, 8, 38, 24, -0.17);
+insert into hitting values ('김현수', 'LG 트윈스', 22, 2019, 0.304, 0.807, 160, 11, 82, 3, 52, 54, 3.61);
+insert into hitting values ('박용택', 'LG 트윈스', 33, 2019, 0.282, 0.683, 55, 1, 22, 3, 30, 18, 0.35);
+insert into hitting values ('정주현', 'LG 트윈스', 7, 2019, 0.231, 0.600, 87, 2, 27, 15, 91, 31, 0.03);
+insert into hitting values ('오지환', 'LG 트윈스', 2, 2019, 0.252, 0.717, 119, 9, 53, 27, 113, 57, 3.40);
+insert into hitting values ('유강남', 'LG 트윈스', 27, 2019, 0.270, 0.772, 113, 16, 49, 0, 82, 30, 3.38);
+
+insert into hitting values ('나성범', 'NC 다이노스', 47, 2019, 0.366, 1.089, 34, 4, 14, 2, 26, 12, 1.51);
+insert into hitting values ('모창민', 'NC 다이노스', 3, 2019, 0.305, 0.824, 104, 10, 55, 3, 62, 31, 1.98);
+insert into hitting values ('박민우', 'NC 다이노스', 1, 2019, 0.344, 0.836, 161, 1, 45, 18, 40, 41, 4.66);
+insert into hitting values ('박석민', 'NC 다이노스', 18, 2019, 0.267, 0.871, 96, 19, 74, 1, 69, 65, 3.25);
+insert into hitting values ('손시헌', 'NC 다이노스', 13, 2019, 0.267, 0.673, 36, 2, 10, 1, 23, 5, 0.37);
+insert into hitting values ('스몰린스키', 'NC 다이노스', 34, 2019, 0.229, 0.737, 47, 9, 42, 3, 31, 16, 0.60);
+insert into hitting values ('이명기', 'NC 다이노스', 33, 2019, 0.293, 0.713, 142, 2, 35, 14, 66, 48, 2.41);
+
+insert into hitting values ('김규민', '키움 히어로즈', 36, 2019, 0.248, 0.657, 55, 3, 24, 2, 68, 22, 0.29);
+insert into hitting values ('김혜성', '키움 히어로즈', 3, 2019, 0.276, 0.691, 96, 0, 32, 20, 85, 29, 1.93);
+insert into hitting values ('김하성', '키움 히어로즈', 7, 2019, 0.307, 0.880, 166, 19, 104, 33, 80, 70, 7.22);
+insert into hitting values ('박동원', '키움 히어로즈', 27, 2019, 0.297, 0.812, 94, 10, 55, 1, 56, 34, 2.94);
+insert into hitting values ('박병호', '키움 히어로즈', 52, 2019, 0.280, 0.959, 121, 33, 98, 0, 117, 78, 5.50);
+insert into hitting values ('서건창', '키움 히어로즈', 14, 2019, 0.300, 0.755, 128, 2, 41, 17, 50, 49, 2.36);
+insert into hitting values ('이정후', '키움 히어로즈', 51, 2019, 0.336, 0.842, 193, 6, 68, 13, 40, 45, 4.92);
+insert into hitting values ('샌즈', '키움 히어로즈', 45, 2019, 0.305, 0.939, 160, 28, 113, 1, 101, 77, 6.21);
+
+insert into hitting values ('나종덕', '롯데 자이언츠', 39, 2019, 0.124, 0.383, 23, 3, 13, 0, 88, 9, -1.34);
+insert into hitting values ('문규현', '롯데 자이언츠', 6, 2019, 0.250, 0.553, 16, 0, 10, 0, 10, 3, -0.27);
+insert into hitting values ('민병헌', '롯데 자이언츠', 3, 2019, 0.304, 0.832, 112, 9, 43, 13, 55, 42, 3.52);
+insert into hitting values ('윌슨', '롯데 자이언츠', 69, 2019, 0.251, 0.784, 58, 9, 37, 0, 60, 31, 1.35);
+insert into hitting values ('손아섭', '롯데 자이언츠', 31, 2019, 0.295, 0.760, 151, 10, 63, 12, 92, 52, 2.76);
+insert into hitting values ('신본기', '롯데 자이언츠', 7, 2019, 0.256, 0.602, 96, 1, 26, 3, 62, 24, 0.60);
+insert into hitting values ('이대호', '롯데 자이언츠', 10, 2019, 0.285, 0.790, 138, 16, 88, 0, 65, 48, 1.80);
+insert into hitting values ('전준우', '롯데 자이언츠', 8, 2019, 0.301, 0.839, 164, 22, 83, 8, 71, 46, 4.24);
+
+insert into hitting values ('강민호', '삼성 라이온즈', 47, 2019, 0.234, 0.719, 81, 13, 45, 0, 76, 33, 1.84);
+insert into hitting values ('구자욱', '삼성 라이온즈', 65, 2019, 0.267, 0.771, 127, 15, 71, 11, 88, 38, 1.98);
+insert into hitting values ('김상수', '삼성 라이온즈', 7, 2019, 0.271, 0.712, 127, 5, 38, 21, 67, 50, 2.98);
+insert into hitting values ('러프', '삼성 라이온즈', 50, 2019, 0.292, 0.911, 138, 22, 101, 6, 87, 80, 4.18);
+insert into hitting values ('박한이', '삼성 라이온즈', 33, 2019, 0.257, 0.712, 19, 2, 13, 0, 17, 9, 0.10);
+insert into hitting values ('박해민', '삼성 라이온즈', 58, 2019, 0.239, 0.646, 121, 5, 44, 24, 82, 58, 1.26);
+insert into hitting values ('김동엽', '삼성 라이온즈', 38, 2019, 0.215, 0.604, 42, 6, 25, 2, 47, 12, -0.85);
+
+insert into hitting values ('김강민', 'SK 와이번스', 0, 2019, 0.270, 0.694, 114, 8, 50, 15, 103, 31, 1.63);
+insert into hitting values ('나주환', 'SK 와이번스', 3, 2019, 0.222, 0.572, 50, 3, 20, 1, 54, 12, -0.52);
+insert into hitting values ('노수광', 'SK 와이번스', 17, 2019, 0.250, 0.644, 97, 2, 28, 27, 68, 46, 0.57);
+insert into hitting values ('로맥', 'SK 와이번스', 27, 2019, 0.276, 0.878, 139, 29, 95, 6, 117, 73, 4.02);
+insert into hitting values ('이재원', 'SK 와이번스', 20, 2019, 0.268, 0.718, 121, 12, 75, 1, 59, 34, 2.66);
+insert into hitting values ('최정', 'SK 와이번스', 14, 2019, 0.292, 0.918, 147, 29, 99, 3, 92, 69, 6.32);
+
+insert into hitting values ('최재훈', '한화 이글스', 13, 2020, 0.301, 0.766, 101, 3, 34, 0, 44, 29, 2.74);
+insert into hitting values ('노시환', '한화 이글스', 8, 2020, 0.220, 0.685, 76, 12, 43, 0, 116, 33, 0.85);
+insert into hitting values ('하주석', '한화 이글스', 16, 2020, 0.286, 0.674, 75, 2, 32, 4, 66, 13, 0.85);
+insert into hitting values ('김태균', '한화 이글스', 52, 2020, 0.219, 0.612, 47, 2, 29, 0, 41, 29, -0.53);
+insert into hitting values ('최진행', '한화 이글스', 25, 2020, 0.234, 0.673, 50, 8, 30, 0, 59, 18, -0.07);
+insert into hitting values ('호잉', '한화 이글스', 30, 2020, 0.194, 0.576, 24, 4, 14, 5, 34, 9, -0.54);
+
+insert into hitting values ('김선빈', 'KIA 타이거즈', 3, 2020, 0.330, 0.808, 100, 1, 37, 1, 43, 40, 2.25);
+insert into hitting values ('김주찬', 'KIA 타이거즈', 16, 2020, 0.333, 0.833, 6, 1, 2, 0, 2, 0, 0.04);
+insert into hitting values ('나지완', 'KIA 타이거즈', 29, 2020, 0.291, 0.837, 136, 17, 92, 0, 114, 64, 3.08);
+insert into hitting values ('터커', 'KIA 타이거즈', 52, 2020, 0.306, 0.955, 166, 32, 113, 0, 67, 76, 5.71);
+insert into hitting values ('최원준', 'KIA 타이거즈', 1, 2020, 0.326, 0.808, 117, 2, 35, 14, 35, 33, 2.47);
+insert into hitting values ('박찬호', 'KIA 타이거즈', 25, 2020, 0.221, 0.548, 106, 3, 36, 15, 87, 36, -1.15);
+insert into hitting values ('최형우', 'KIA 타이거즈', 34, 2020, 0.354, 1.023, 185, 28, 115, 0, 101, 70, 5.71);
+
+insert into hitting values ('강백호', 'kt wiz', 50, 2020, 0.329, 0.957, 162, 23, 88, 7, 92, 65, 4.69);
+insert into hitting values ('로하스', 'kt wiz', 24, 2020, 0.349, 1.095, 189, 46, 132, 0, 130, 63, 7.62);
+insert into hitting values ('박경수', 'kt wiz', 6, 2020, 0.281, 0.835, 91, 13, 59, 0, 96, 48, 2.41);
+insert into hitting values ('심우준', 'kt wiz', 2, 2020, 0.233, 0.590, 109, 3, 47, 35, 97, 37, -0.10);
+insert into hitting values ('유한준', 'kt wiz', 61, 2020, 0.280, 0.758, 106, 11, 63, 0, 50, 39, 0.61);
+insert into hitting values ('송민섭', 'kt wiz', 12, 2020, 0.195, 0.633, 8, 1, 5, 4, 13, 5, -0.23);
+insert into hitting values ('황재균', 'kt wiz', 10, 2020, 0.310, 0.879, 166, 21, 95, 11, 98, 47, 5.06);
+
+insert into hitting values ('김재호', '두산 베어스', 52, 2020, 0.290, 0.710, 115, 2, 39, 6, 44, 44, 1.98);
+insert into hitting values ('김재환', '두산 베어스', 32, 2020, 0.262, 0.857, 133, 29, 109, 6, 151, 89, 4.44);
+insert into hitting values ('박건우', '두산 베어스', 37, 2020, 0.301, 0.837, 145, 14, 70, 8, 64, 42, 3.69);
+insert into hitting values ('박세혁', '두산 베어스', 10, 2020, 0.273, 0.713, 96, 3, 49, 5, 44, 35, 1.78);
+insert into hitting values ('오재원', '두산 베어스', 24, 2020, 0.232, 0.688, 36, 5, 27, 10, 49, 16, 0.25);
+insert into hitting values ('최주환', '두산 베어스', 53, 2020, 0.304, 0.838, 152, 16, 85, 2, 66, 47, 3.97);
+insert into hitting values ('페르난데스', '두산 베어스', 9, 2020, 0.341, 0.904, 197, 21, 104, 0, 42, 56, 4.39);
+insert into hitting values ('허경민', '두산 베어스', 13, 2020, 0.333, 0.813, 143, 5, 55, 14, 28, 34, 3.34);
+
+insert into hitting values ('라모스', 'LG 트윈스', 44, 2020, 0.277, 0.959, 117, 38, 84, 2, 133, 55, 4.35);
+insert into hitting values ('김용의', 'LG 트윈스', 10, 2020, 0.254, 0.625, 17, 1, 11, 7, 15, 3, -0.13);
+insert into hitting values ('김현수', 'LG 트윈스', 22, 2020, 0.331, 0.923, 178, 22, 117, 0, 53, 63, 5.24);
+insert into hitting values ('박용택', 'LG 트윈스', 33, 2020, 0.300, 0.735, 65, 2, 35, 2, 34, 15, 0.39);
+insert into hitting values ('정주현', 'LG 트윈스', 7, 2020, 0.250, 0.658, 81, 4, 30, 8, 63, 29, 0.14);
+insert into hitting values ('오지환', 'LG 트윈스', 2, 2020, 0.300, 0.821, 156, 10, 71, 20, 113, 44, 4.33);
+insert into hitting values ('유강남', 'LG 트윈스', 27, 2020, 0.259, 0.744, 110, 16, 74, 1, 84, 32, 2.89);
+
+insert into hitting values ('나성범', 'NC 다이노스', 47, 2020, 0.324, 0.980, 168, 33, 107, 3, 147, 47, 4.94);
+insert into hitting values ('모창민', 'NC 다이노스', 3, 2020, 0.303, 0.797, 40, 2, 13, 0, 22, 8, 0.34);
+insert into hitting values ('박민우', 'NC 다이노스', 1, 2020, 0.347, 0.884, 160, 8, 62, 13, 48, 36, 4.48);
+insert into hitting values ('박석민', 'NC 다이노스', 18, 2020, 0.308, 0.903, 109, 14, 63, 0, 62, 73, 3.97);
+insert into hitting values ('노진혁', 'NC 다이노스', 52, 2020, 0.268, 0.820, 113, 19, 81, 0, 105, 49, 3.02);
+insert into hitting values ('알테어', 'NC 다이노스', 23, 2020, 0.277, 0.888, 132, 30, 107, 22, 147, 46, 4.26);
+insert into hitting values ('이명기', 'NC 다이노스', 33, 2020, 0.309, 0.749, 146, 2, 45, 12, 78, 49, 1.75);
+
+insert into hitting values ('김규민', '키움 히어로즈', 36, 2020, 0.202, 0.511, 20, 1, 6, 1, 23, 4, -0.63);
+insert into hitting values ('김혜성', '키움 히어로즈', 3, 2020, 0.285, 0.745, 140, 7, 59, 25, 92, 46, 2.77);
+insert into hitting values ('김하성', '키움 히어로즈', 7, 2020, 0.307, 0.920, 161, 29, 105, 23, 68, 74, 6.81);
+insert into hitting values ('박동원', '키움 히어로즈', 27, 2020, 0.251, 0.764, 80, 12, 50, 0, 67, 37, 2.26);
+insert into hitting values ('박병호', '키움 히어로즈', 52, 2020, 0.222, 0.789, 67, 20, 62, 0, 110, 55, 1.62);
+insert into hitting values ('서건창', '키움 히어로즈', 14, 2020, 0.277, 0.778, 132, 5, 51, 23, 58, 90, 2.17);
+insert into hitting values ('이정후', '키움 히어로즈', 51, 2020, 0.334, 0.925, 179, 15, 100, 12, 47, 58, 5.68);
+insert into hitting values ('러셀', '키움 히어로즈', 50, 2020, 0.254, 0.653, 62, 2, 31, 2, 37, 22, 0.45);
+
+insert into hitting values ('김준태', '롯데 자이언츠', 44, 2020, 0.225, 0.671, 69, 5, 43, 2, 64, 56, 0.96);
+insert into hitting values ('안치홍', '롯데 자이언츠', 13, 2020, 0.286, 0.764, 118, 8, 54, 14, 47, 35, 2.02);
+insert into hitting values ('민병헌', '롯데 자이언츠', 3, 2020, 0.233, 0.582, 72, 2, 23, 10, 62, 21, -0.68);
+insert into hitting values ('마차도', '롯데 자이언츠', 6, 2020, 0.280, 0.778, 136, 12, 67, 15, 60, 54, 3.25);
+insert into hitting values ('손아섭', '롯데 자이언츠', 31, 2020, 0.352, 0.907, 190, 11, 85, 5, 56, 61, 4.93);
+insert into hitting values ('신본기', '롯데 자이언츠', 7, 2020, 0.217, 0.595, 23, 2, 12, 1, 22, 14, 0.04);
+insert into hitting values ('이대호', '롯데 자이언츠', 10, 2020, 0.292, 0.806, 158, 20, 110, 1, 68, 53, 1.01);
+insert into hitting values ('전준우', '롯데 자이언츠', 8, 2020, 0.279, 0.829, 157, 26, 96, 5, 79, 52, 3.06);
+
+insert into hitting values ('강민호', '삼성 라이온즈', 47, 2020, 0.287, 0.836, 102, 19, 61, 0, 54, 31, 3.00);
+insert into hitting values ('구자욱', '삼성 라이온즈', 65, 2020, 0.307, 0.863, 137, 15, 78, 19, 91, 51, 3.36);
+insert into hitting values ('김상수', '삼성 라이온즈', 7, 2020, 0.304, 0.798, 123, 5, 47, 10, 55, 55, 3.26);
+insert into hitting values ('팔카', '삼성 라이온즈', 69, 2020, 0.209, 0.639, 41, 8, 23, 2, 58, 18, -0.67);
+insert into hitting values ('이원석', '삼성 라이온즈', 16, 2020, 0.268, 0.751, 107, 13, 74, 0, 81, 49, 1.29);
+insert into hitting values ('박해민', '삼성 라이온즈', 58, 2020, 0.292, 0.764, 142, 11, 55, 34, 76, 39, 2.56);
+insert into hitting values ('김동엽', '삼성 라이온즈', 38, 2020, 0.311, 0.865, 127, 20, 73, 4, 79, 29, 2.13);
+
+insert into hitting values ('김강민', 'SK 와이번스', 0, 2020, 0.243, 0.716, 68, 11, 41, 7, 61, 27, 0.60);
+insert into hitting values ('김성현', 'SK 와이번스', 16, 2020, 0.273, 0.663, 92, 2, 24, 1, 26, 30, 0.66);
+insert into hitting values ('고종욱', 'SK 와이번스', 53, 2020, 0.284, 0.691, 76, 3, 26, 1, 54, 13, 0.02);
+insert into hitting values ('로맥', 'SK 와이번스', 27, 2020, 0.281, 0.948, 134, 32, 88, 4, 114, 90, 4.32);
+insert into hitting values ('이재원', 'SK 와이번스', 20, 2020, 0.191, 0.527, 41, 2, 21, 0, 24, 18, -0.57);
+insert into hitting values ('최정', 'SK 와이번스', 14, 2020, 0.268, 0.925, 119, 32, 93, 8, 97, 75, 4.77);
+
+set client_encoding = 'UHC';

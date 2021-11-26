@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Salary List</title>
+</head>
+<body>
+
+<table border="1">
+  <thead>
+  <th>Name</th>
+  <th>Birth</th>
+  <th>Year</th>
+  <th>Salary</th>
+  </thead>
+
+  <tbody>
+  {% for salary in salaries %}
+  <tr>
+    <td>{{ salary[0] }}</td>
+    <td>{{ salary[1] }}</td>
+    <td>{{ salary[2] }}</td>
+    <td>{{ salary[3] }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Salary</title>
+</head>
+<body>
+
+<form action="/salarylist" method="POST">
+    See salary list of coaches. <br>
+    <input type="submit" name="send" value="COACH"><br><br>
+    See salary list of players. <br>
+    <input type="submit" name="send" value="PLAYER"><br><br><br>
+</form>
+
+<form action="/insert" method="POST">
+    Insert a new salary data. <br>
+    <input type="submit" name="send" value="INSERT"><br><br><br>
+</form>
+
+<form action="/update" method="POST">
+    Update salary data. <br>
+    <input type="submit" name="send" value="UPDATE"><br><br><br>
+</form>
+
+<form action="/highestsalary" method="POST">
+    Search the highest-paid player. <br>
+    <input type="submit" name="send" value="HIGHEST"><br><br><br>
+</form>
+
+<form action="/">
+    <input type="submit" name="back" value="BACK">
+</form>
+
+</body>
+</html>

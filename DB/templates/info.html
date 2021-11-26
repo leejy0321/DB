@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Information</title>
+</head>
+<body>
+
+<form action="/searchinfo" method="POST">
+    Search information about team. <br>
+    <input type="submit" name="send" value="TEAM"><br><br>
+    Search information about players. <br>
+    <input type="submit" name="send" value="PLAYER"><br><br>
+    Search information about coaches. <br>
+    <input type="submit" name="send" value="COACH"><br><br><br>
+</form>
+
+<form action="/infowithstats" method="POST">
+    See all information about pitchers with statistics. <br>
+    <input type="submit" name="send" value="PITCHER"><br><br>
+    See all information about hitters with statistics. <br>
+    <input type="submit" name="send" value="HITTER"><br><br>
+</form>
+
+<form action="/playerwithteam" method="POST">
+    See all information about players with team information. <br>
+    <input type="submit" name="send" value="PLAYER"><br><br><br>
+</form>
+
+<form action="/">
+    <input type="submit" name="back" value="BACK">
+</form>
+
+</body>
+</html>

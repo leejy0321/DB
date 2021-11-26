@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+</head>
+<body>
+
+<table border="1">
+  <thead>
+  <th>Coach name</th>
+  <th>Year</th>
+  <th>Birth</th>
+  <th>Salary</th>
+  </thead>
+
+  <tbody>
+  {% for coach in coaches %}
+  <tr>
+    <td>{{ coach[0] }}</td>
+    <td>{{ coach[1] }}</td>
+    <td>{{ coach[2] }}</td>
+    <td>{{ coach[3] }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+</body>
+</html>

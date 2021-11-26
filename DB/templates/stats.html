@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistics</title>
+</head>
+<body>
+
+<form action="/searchstats" method="POST">
+    Search statistics about pitcher. <br>
+    <input type="submit" name="send" value="PITCHER"><br><br>
+    Search statistics about hitter. <br>
+    <input type="submit" name="send" value="HITTER"><br><br><br>
+</form>
+
+<form action="/deletestats" method="POST">
+    Delete statistics from pitcher data. <br>
+    <input type="submit" name="send" value="PITCHER"><br><br>
+    Delete statistics from hitter data. <br>
+    <input type="submit" name="send" value="HITTER"><br><br><br>
+</form>
+
+<form action="/teamaverage" method="POST">
+    See a list of team ERA. <br>
+    <input type="submit" name="send" value="ERA"><br><br>
+    See a list of team batting average. <br>
+    <input type="submit" name="send" value="AVG"><br><br><br>
+</form>
+
+<form action="/">
+    <input type="submit" name="back" value="BACK">
+</form>
+
+</body>
+</html>

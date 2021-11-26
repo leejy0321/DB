@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+</head>
+<body>
+
+<table border="1">
+  <thead>
+  <th>Player name</th>
+  <th>Team name</th>
+  <th>Uniform number</th>
+  <th>Year</th>
+  <th>Win</th>
+  <th>Lose</th>
+  <th>SV</th>
+  <th>ERA</th>
+  <th>IP</th>
+  <th>SO</th>
+  <th>BB</th>
+  <th>WAR</th>
+  </thead>
+
+  <tbody>
+  {% for pitcher in pitchers %}
+  <tr>
+    <td>{{ pitcher[0] }}</td>
+    <td>{{ pitcher[1] }}</td>
+    <td>{{ pitcher[2] }}</td>
+    <td>{{ pitcher[3] }}</td>
+    <td>{{ pitcher[4] }}</td>
+    <td>{{ pitcher[5] }}</td>
+    <td>{{ pitcher[6] }}</td>
+    <td>{{ pitcher[7] }}</td>
+    <td>{{ pitcher[8] }}</td>
+    <td>{{ pitcher[9] }}</td>
+    <td>{{ pitcher[10] }}</td>
+    <td>{{ pitcher[11] }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+</body>
+</html>

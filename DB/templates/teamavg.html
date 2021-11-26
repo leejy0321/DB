@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Team AVG</title>
+</head>
+<body>
+
+<table border="1">
+  <thead>
+  <th>Team name</th>
+  <th>Year</th>
+  <th>AVG</th>
+  </thead>
+
+  <tbody>
+  {% for AVG in AVGs %}
+  <tr>
+    <td>{{ AVG[0] }}</td>
+    <td>{{ AVG[1] }}</td>
+    <td>{{ AVG[2] }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+</body>
+</html>

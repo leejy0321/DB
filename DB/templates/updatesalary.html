@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Salary Data</title>
+</head>
+<body>
+
+Update new salary data into coach. <br>
+<form action="/updatecoachsalary" method="POST">
+    <label>Coach name:</label>
+    <input type="text" name="cname" value=""><br>
+
+    <label>Year:</label>
+    <input type="text" name="year" value="4 digits"><br>
+
+    <label>New salary:</label>
+    <input type="text" name="salary" value=""><br>
+
+    <input type="submit" name="send" value="UPDATE"><br><br>
+</form>
+
+Update new salary data into player. <br>
+<form action="/updateplayersalary" method="POST">
+    <label>Player name:</label>
+    <input type="text" name="pname" value=""><br>
+
+    <label>Team:</label>
+    <input type="text" name="team" value=""><br>
+
+    <label>Uniform number:</label>
+    <input type="text" name="number" value=""><br>
+
+    <label>Year:</label>
+    <input type="text" name="year" value="4 digits"><br>
+
+    <label>New salary:</label>
+    <input type="text" name="salary" value=""><br>
+
+    <input type="submit" name="send" value="UPDATE"><br><br>
+</form>
+
+<form action="/salary" method="POST">
+    <input type="submit" name="send" value="BACK">
+</form>
+
+</body>
+</html>

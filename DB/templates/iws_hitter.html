@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hitter information with statistics</title>
+</head>
+<body>
+
+<table border="1">
+  <thead>
+  <th>Player name</th>
+  <th>Team name</th>
+  <th>Uniform number</th>
+  <th>Year</th>
+  <th>Position</th>
+  <th>Coach name</th>
+  <th>Birth</th>
+  <th>Height</th>
+  <th>Weight</th>
+  <th>Salary</th>
+  <th>AVG</th>
+  <th>OPS</th>
+  <th>Hit</th>
+  <th>HR</th>
+  <th>RBI</th>
+  <th>SB</th>
+  <th>SO</th>
+  <th>BB</th>
+  <th>WAR</th>
+  </thead>
+
+  <tbody>
+  {% for hitter in hitters %}
+  <tr>
+    <td>{{ hitter[0] }}</td>
+    <td>{{ hitter[1] }}</td>
+    <td>{{ hitter[2] }}</td>
+    <td>{{ hitter[3] }}</td>
+    <td>{{ hitter[4] }}</td>
+    <td>{{ hitter[5] }}</td>
+    <td>{{ hitter[6] }}</td>
+    <td>{{ hitter[7] }}</td>
+    <td>{{ hitter[8] }}</td>
+    <td>{{ hitter[9] }}</td>
+    <td>{{ hitter[10] }}</td>
+    <td>{{ hitter[11] }}</td>
+    <td>{{ hitter[12] }}</td>
+    <td>{{ hitter[13] }}</td>
+    <td>{{ hitter[14] }}</td>
+    <td>{{ hitter[15] }}</td>
+    <td>{{ hitter[16] }}</td>
+    <td>{{ hitter[17] }}</td>
+    <td>{{ hitter[18] }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+</body>
+</html>

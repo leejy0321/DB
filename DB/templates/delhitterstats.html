@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Hitter Data</title>
+</head>
+<body>
+
+<form action="/deletehitter" method="POST">
+    <label>Player name:</label>
+    <input type="text" name="pname" value=""><br>
+
+    <label>Team name:</label>
+    <input type="text" name="tname" value=""><br>
+
+    <label>Year:</label>
+    <input type="text" name="year" value=""><br>
+
+    <label>Uniform number:</label>
+    <input type="text" name="number" value=""><br><br>
+
+    <input type="submit" name="send" value="Delete"><br><br>
+</form>
+
+<form action="/statistics" method="POST">
+    <input type="submit" name="send" value="BACK">
+</form>
+
+</body>
+</html>
